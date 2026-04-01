@@ -1,30 +1,45 @@
 import React, { useState, useEffect, useRef } from 'react';
+import {
+  GraduationCap, Briefcase, RefreshCw, TrendingUp, Building, DollarSign,
+  Search, Swords, Shield, ZoomIn, BarChart, Terminal, Map, Siren,
+  Hammer, Brain, Target, BookOpen, Bot, Phone, Rocket, Mail,
+  Lock, Calendar, CalendarDays, CreditCard, Play, X
+} from 'lucide-react';
 
 const CyberSecurity = () => {
   const [showFloatCta, setShowFloatCta] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const toolsRef = useRef(null);
 
   const themeColors = {
-    background: '#0f172a',
-    surface: '#0f172a',
-    surface17: 'rgba(15, 23, 42, 0.7)',
-    text: '#e2e8f0',
+    background: '#2D3436',
+    surface: '#2D3436',
+    surface17: 'rgba(45, 52, 54, 0.7)',
+    text: '#66ff00',
     textMuted: '#94a3b8',
-    primary: '#6C63FF',
+    primary: '#66ff00',
     primaryDark: '#554fee',
-    secondary: '#FF6584',
-    accent: '#6C63FF',
+    secondary: '#66ff00',
+    accent: '#66ff00',
     cyan: '#22d3ee',
     cyanDark: '#0ea5e9',
-    green: '#22c55e',
+    green: '#66ff00',
     border: '#1e293b',
-    gradientA: 'linear-gradient(90deg, #6C63FF 0%, #FF6584 100%)',
-    gradientB: 'linear-gradient(90deg, #6C63FF 0%, #FF6584 100%)',
-    gradientC: 'linear-gradient(90deg, #6C63FF 0%, #FF6584 100%)',
-    gradientD: 'linear-gradient(90deg, #6C63FF 0%, #FF6584 100%)',
-    textGradient: 'linear-gradient(90deg, #6C63FF 0%, #FF6584 100%)',
+    gradientA: 'linear-gradient(90deg, #66ff00 0%, #66ff00 100%)',
+    gradientB: 'linear-gradient(90deg, #66ff00 0%, #66ff00 100%)',
+    gradientC: 'linear-gradient(90deg, #66ff00 0%, #66ff00 100%)',
+    gradientD: 'linear-gradient(90deg, #66ff00 0%, #66ff00 100%)',
+    textGradient: 'linear-gradient(90deg, #66ff00 0%, #66ff00 100%)',
+    resultColor: '#66ff00',
   };
+
+  const videoTestimonials = [
+    { id: 'dQw4w9WgXcQ', name: 'AJITH', role: 'DIGITAL MARKETING', salary: '5 LPA' },
+    { id: 'jNQXAC9IVRw', name: 'KRITHIKA', role: 'FULL STACK DEVELOPER', salary: '7 LPA' },
+    { id: 'V-_O7nl0Ii0', name: 'BHUVANESHWARAN', role: 'DATA ARCHITECT', salary: '4.5 LPA' },
+    { id: 'tPEE9ZwTmy0', name: 'DIVYA', role: 'CYBER SECURITY ANALYST', salary: '6.5 LPA' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,7 +119,7 @@ const CyberSecurity = () => {
         '--pc-surface': themeColors.surface,
       }}
     >
-      
+
       {/* ── Salso TICKY HEADER ── */}
       <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-purple-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -113,20 +128,20 @@ const CyberSecurity = () => {
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center justify-center md:justify-end gap-2 w-full sm:w-auto">
-            <a href="tel:+918925449073" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-white font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5 shadow-lg shadow-purple-500/30 border border-indigo-500/40 min-w-0"
+            <a href="tel:+918925449073" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-black font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5 shadow-lg shadow-purple-500/30 border border-indigo-500/40 min-w-0"
               style={{ backgroundImage: themeColors.gradientA }}>
               <span className="text-[8px] md:text-xs uppercase tracking-wide">Coimbatore</span>
-              <span className="text-[10px] md:text-sm whitespace-nowrap">📞 +91 8925 449 073</span>
+              <span className="text-[10px] md:text-sm whitespace-nowrap flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> +91 8925 449 073</span>
             </a>
 
-            <a href="tel:+917619343001" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-white font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/30 border border-indigo-500/40 min-w-0"
+            <a href="tel:+917619343001" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-black font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/30 border border-indigo-500/40 min-w-0"
               style={{ backgroundImage: themeColors.gradientB }}>
               <span className="text-[8px] md:text-xs uppercase tracking-wide">Bangalore</span>
-              <span className="text-[10px] md:text-sm whitespace-nowrap">📞 +91 7619 343 001</span>
+              <span className="text-[10px] md:text-sm whitespace-nowrap flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> +91 7619 343 001</span>
             </a>
 
-            <a href="#lead-form" className="w-full sm:w-60 md:w-auto text-center text-white font-bold text-xs sm:text-sm py-2 px-4 rounded-full shadow-lg shadow-purple-600/20 transition-all hover:scale-105"
-              style={{ backgroundImage: themeColors.gradientA }}>
+            <a href="#lead-form" className="w-full sm:w-60 md:w-auto text-center font-bold text-xs sm:text-sm py-2 px-4 rounded-full transition-all hover:scale-105"
+              style={{ backgroundColor: '#ffffff', backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,1), rgba(245,245,245,0.95))', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', border: '1px solid rgba(255, 255, 255, 0.85)', boxShadow: '0 6px 16px rgba(0, 0, 0, 0.08)', color: '#000000', textShadow: '0 1px 1px rgba(0,0,0,0.08)' }}>
               Get Free Demo
             </a>
           </div>
@@ -141,23 +156,35 @@ const CyberSecurity = () => {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-r from-emerald-600/20 to-teal-600/15 blur-[100px] rounded-full pointer-events-none animate-pulse delay-500"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-24 relative z-10">
+
+          {/* <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="flex items-center gap-3 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full">
+              <div className="w-8 h-8 rounded-full bg-pink-600 text-white font-bold flex items-center justify-center text-sm">
+                PP
+              </div>
+              <div className="text-white font-semibold text-sm">Pavi Pavi</div>
+              <div className="text-slate-500 text-xs">a month ago</div>
+            </div>
+            <div className="text-yellow-500 text-lg">★</div>
+          </div> */}
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            
+
             {/* Left: Copy */}
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider mb-6" style={{ backgroundColor: 'rgba(108, 99, 255, 0.1)', borderColor: 'rgba(255, 101, 132, 0.3)', backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#6C63FF' }}></span>
                 Now Immediately Enrolling
               </div>
-              
+
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.15] mb-6">
-                Master <span className="text-transparent bg-clip-text" style={{ backgroundImage: themeColors.textGradient }}>Cyber Security</span><br className="hidden sm:block" />              
+                Master <span className="text-transparent bg-clip-text" style={{ backgroundImage: themeColors.textGradient }}>Cyber Security</span><br className="hidden sm:block" />
               </h1>
-              
+
               <p className="text-lg text-slate-400 mb-8 max-w-2xl leading-relaxed">
                 No.1 Cybersecurity Course in Bangalore. Learn Practical Skills, Ethical Hacking, Tools, and Defensive Techniques with Advanced Training. Boost your career with our Job Guarantee Program.
               </p>
-              
+
               <div className="flex flex-wrap gap-3 mb-10 text-sm font-medium">
                 <span className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full text-slate-300">
                   <CheckIcon /> Live Instructor-Led
@@ -172,7 +199,7 @@ const CyberSecurity = () => {
                   <CheckIcon /> Certifications
                 </span>
               </div>
-              
+
               <div className="grid grid-cols-3 gap-6 pt-6 border-t border-slate-800 max-w-xl">
                 <div>
                   <div className="text-3xl font-black text-white mb-1">500+</div>
@@ -193,11 +220,11 @@ const CyberSecurity = () => {
             <div className="lg:col-span-5 relative" id="lead-form">
               {/* Form Glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-100 animate-pulse"></div>
-              
+
               <div className="relative bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
                 {!formSubmitted ? (
                   <>
-                    <h3 className="text-2xl font-bold text-white mb-2">Get Free Demo Class 🚀</h3>
+                    <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">Get Free Demo Class <Rocket className="w-6 h-6" color="#66ff00" /></h3>
                     <p className="text-sm text-slate-400 mb-6">Our counsellor will call you within 2 hours</p>
 
                     <form onSubmit={handleSubmit} className="space-y-4 text-left">
@@ -223,10 +250,11 @@ const CyberSecurity = () => {
                         </select>
                       </div>
 
-                      <button type="submit" className="w-full mt-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-base py-3.5 px-6 rounded-lg shadow-lg shadow-purple-600/30 transition-all transform hover:-translate-y-0.5 border border-purple-500/50">
+                      <button type="submit" className="w-full mt-2 font-bold text-base py-3.5 px-6 rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5"
+                        style={{ backgroundColor: themeColors.green, color: '#000000', border: '1px solid rgba(102,255,0,0.5)' }}>
                         Book My Free Demo →
                       </button>
-                      <p className="text-center text-xs text-slate-500 mt-4">🔒 100% Free. No spam. Cancel anytime.</p>
+                      <p className="text-center text-xs text-slate-500 mt-4 flex items-center justify-center gap-1"><Lock className="w-3 h-3" /> 100% Free. No spam. Cancel anytime.</p>
                     </form>
                   </>
                 ) : (
@@ -251,7 +279,8 @@ const CyberSecurity = () => {
           <h2 className="text-3xl font-black text-white mb-4">Cyber Security Course in Coimbatore with Placement Assistance</h2>
           <p className="text-slate-300 text-lg mb-3">Protect the digital world and build a high-paying career with Peopleclick’s Cyber Security Course in Coimbatore.</p>
           <p className="text-slate-300 text-lg mb-5">Learn from industry experts, practice real-time hacking tools, and become job-ready with our placement-focused training program.</p>
-          <a href="#lead-form" className="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:opacity-90">👉 Book a Free Demo Class Today</a>
+          <a href="#lead-form" className="inline-block font-bold py-3 px-6 rounded-lg shadow-lg hover:opacity-90"
+            style={{ backgroundColor: themeColors.green, color: '#000000' }}> Book a Free Demo Class Today</a>
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl">
@@ -265,7 +294,7 @@ const CyberSecurity = () => {
                     <li>Hands-on tools like Nmap, Wireshark, Metasploit</li>
                     <li>Live attack & defense simulations</li>
                   </ul>
-                  <p className="mt-2 text-lime-300">Result: You become job-ready, not just certified</p>
+                  <p className="mt-2" style={{ color: themeColors.resultColor }}>Result: You become job-ready, not just certified</p>
                 </li>
                 <li>
                   <strong>Learn exactly what companies are hiring for</strong>
@@ -276,7 +305,7 @@ const CyberSecurity = () => {
                     <li>SOC & Blue Team skills</li>
                     <li>Cloud Security (AWS, Azure basics)</li>
                   </ul>
-                  <p className="mt-2 text-lime-300">Result: You match real job roles like SOC Analyst & Ethical Hacker</p>
+                  <p className="mt-2" style={{ color: themeColors.resultColor }}>Result: You match real job roles like SOC Analyst & Ethical Hacker</p>
                 </li>
                 <li>
                   <strong>Build proof, not just certificates</strong>
@@ -287,7 +316,7 @@ const CyberSecurity = () => {
                     <li>SIEM Dashboard (Splunk/ELK)</li>
                     <li>Vulnerability Scanning</li>
                   </ul>
-                  <p className="mt-2 text-lime-300">Result: Strong portfolio + interview confidence</p>
+                  <p className="mt-2" style={{ color: themeColors.resultColor }}>Result: Strong portfolio + interview confidence</p>
                 </li>
                 <li>
                   <strong>Get placement-ready, not just course completion</strong>
@@ -298,7 +327,7 @@ const CyberSecurity = () => {
                     <li>Placement assistance</li>
                     <li>Job referrals</li>
                   </ul>
-                  <p className="mt-2 text-lime-300">Result: Faster job placement</p>
+                  <p className="mt-2" style={{ color: themeColors.resultColor }}>Result: Faster job placement</p>
                 </li>
               </ol>
             </div>
@@ -494,19 +523,19 @@ const CyberSecurity = () => {
             ].map((mod, i) => (
               <div key={i} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl hover:border-purple-500 transition-all hover:-translate-y-1 group">
                 <div className="text-center">
-                <div className="mx-auto w-12 h-12 rounded-xl flex items-center justify-center font-black mb-4" style={{ backgroundColor: 'rgba(108, 99, 255, 0.1)', borderColor: 'rgba(255, 101, 132, 0.3)', border: '1px solid rgba(255, 101, 132, 0.3)', backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', color: 'transparent', backgroundClip: 'text' }}>
-                  {mod.num}
+                  <div className="mx-auto w-12 h-12 rounded-xl flex items-center justify-center font-black mb-4" style={{ backgroundColor: 'rgba(108, 99, 255, 0.1)', borderColor: 'rgba(255, 101, 132, 0.3)', border: '1px solid rgba(255, 101, 132, 0.3)', backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', color: 'transparent', backgroundClip: 'text' }}>
+                    {mod.num}
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">{mod.title}</h3>
+                  <p className="text-sm text-slate-400 mb-4">{mod.desc}</p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {mod.tags.map(tag => (
+                      <span key={tag} className="text-xs font-semibold px-2 py-1 rounded-md" style={{ backgroundColor: 'rgba(108, 99, 255, 0.1)', color: '#FF6584', border: '1px solid rgba(255, 101, 132, 0.3)' }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{mod.title}</h3>
-                <p className="text-sm text-slate-400 mb-4">{mod.desc}</p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {mod.tags.map(tag => (
-                    <span key={tag} className="text-xs font-semibold px-2 py-1 rounded-md" style={{ backgroundColor: 'rgba(108, 99, 255, 0.1)', color: '#FF6584', border: '1px solid rgba(255, 101, 132, 0.3)' }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
               </div>
             ))}
           </div>
@@ -524,15 +553,15 @@ const CyberSecurity = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: '🎓', title: 'Fresh Graduates', desc: 'Recent graduates looking to enter the IT security field with no prior experience required.' },
-              { icon: '💼', title: 'IT Professionals', desc: 'System admins, network engineers, and IT support staff wanting to specialize in security.' },
-              { icon: '🔄', title: 'Career Switchers', desc: 'Professionals from non-IT backgrounds seeking a lucrative career in cybersecurity.' },
-              { icon: '📈', title: 'Working Professionals', desc: 'Current employees aiming for salary hikes and promotions through security certifications.' },
-              { icon: '🏢', title: 'Diploma Holders', desc: 'Diploma graduates in computer science or related fields looking to advance their careers.' },
-              { icon: '💰', title: 'Salary Seekers', desc: 'Individuals with less than 60% marks who want to break into high-paying IT security roles.' },
+              { icon: <GraduationCap className="w-10 h-10" color="#66ff00" />, title: 'Fresh Graduates', desc: 'Recent graduates looking to enter the IT security field with no prior experience required.' },
+              { icon: <Briefcase className="w-10 h-10" color="#66ff00" />, title: 'IT Professionals', desc: 'System admins, network engineers, and IT support staff wanting to specialize in security.' },
+              { icon: <RefreshCw className="w-10 h-10" color="#66ff00" />, title: 'Career Switchers', desc: 'Professionals from non-IT backgrounds seeking a lucrative career in cybersecurity.' },
+              { icon: <TrendingUp className="w-10 h-10" color="#66ff00" />, title: 'Working Professionals', desc: 'Current employees aiming for salary hikes and promotions through security certifications.' },
+              { icon: <Building className="w-10 h-10" color="#66ff00" />, title: 'Diploma Holders', desc: 'Diploma graduates in computer science or related fields looking to advance their careers.' },
+              { icon: <DollarSign className="w-10 h-10" color="#66ff00" />, title: 'Salary Seekers', desc: 'Individuals with less than 60% marks who want to break into high-paying IT security roles.' },
             ].map((audience, i) => (
               <div key={i} className="bg-slate-900/80 border border-slate-800 p-8 rounded-2xl hover:border-purple-500/50 transition-all hover:-translate-y-2 group backdrop-blur">
-                <div className="text-4xl mb-4 text-violet-300">
+                <div className="text-4xl mb-4">
                   {audience.icon}
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{audience.title}</h3>
@@ -588,14 +617,14 @@ const CyberSecurity = () => {
 
           <div ref={toolsRef} className="flex gap-5 overflow-x-auto pb-2 md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 md:overflow-visible md:pb-0 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-purple-500/40">
             {[
-              { name: 'Wireshark', icon: '🔍', desc: 'Network Protocol Analyzer' },
-              { name: 'Metasploit', icon: '⚔️', desc: 'Penetration Testing Framework' },
-              { name: 'Burp Suite', icon: '🛡️', desc: 'Web Vulnerability Scanner' },
-              { name: 'Nessus', icon: '🔎', desc: 'Vulnerability Assessment' },
-              { name: 'Splunk', icon: '📊', desc: 'SIEM & Log Analysis' },
-              { name: 'Kali Linux', icon: '🐧', desc: 'Ethical Hacking OS' },
-              { name: 'Nmap', icon: '🗺️', desc: 'Network Scanner' },
-              { name: 'Snort', icon: '🚨', desc: 'Intrusion Detection' },
+              { name: 'Wireshark', icon: <Search className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'Network Protocol Analyzer' },
+              { name: 'Metasploit', icon: <Swords className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'Penetration Testing Framework' },
+              { name: 'Burp Suite', icon: <Shield className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'Web Vulnerability Scanner' },
+              { name: 'Nessus', icon: <ZoomIn className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'Vulnerability Assessment' },
+              { name: 'Splunk', icon: <BarChart className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'SIEM & Log Analysis' },
+              { name: 'Kali Linux', icon: <Terminal className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'Ethical Hacking OS' },
+              { name: 'Nmap', icon: <Map className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'Network Scanner' },
+              { name: 'Snort', icon: <Siren className="w-10 h-10 mx-auto" color="#66ff00" />, desc: 'Intrusion Detection' },
             ].map((tool, i) => (
               <div key={i} className="min-w-[220px] md:min-w-0 flex-shrink-0 md:flex-shrink md:mx-0 rounded-2xl bg-slate-900/80 border border-slate-800 p-6 hover:border-purple-500/50 transition-all hover:-translate-y-1 group backdrop-blur text-center snap-start">
                 <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">{tool.icon}</div>
@@ -618,12 +647,12 @@ const CyberSecurity = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: '🛠️', title: 'Hands-On Projects', desc: 'Work on 10+ real-world cybersecurity projects including malware analysis, phishing detection, and secure network design.' },
-              { icon: '🧠', title: 'LMS Learning Platform', desc: '24/7 access to recorded sessions, expert videos, and organized learning materials for flexible study.' },
-              { icon: '🎯', title: 'Interview Preparation', desc: 'Mock interviews, resume building, and company-specific question practice to crack cybersecurity jobs.' },
-              { icon: '📚', title: 'Aptitude & Technical Training', desc: 'Free training in logical thinking, basic maths, and technical concepts to strengthen your foundation.' },
-              { icon: '🤖', title: 'AI Interview Practice Portal', desc: 'Practice with AI-powered mock interviews for instant feedback and confidence building.' },
-              { icon: '💼', title: 'Placement Support', desc: 'Dedicated career mentoring, job referrals, and support until you land your dream cybersecurity role.' },
+              { icon: <Hammer className="w-10 h-10" color="#66ff00" />, title: 'Hands-On Projects', desc: 'Work on 10+ real-world cybersecurity projects including malware analysis, phishing detection, and secure network design.' },
+              { icon: <Brain className="w-10 h-10" color="#66ff00" />, title: 'LMS Learning Platform', desc: '24/7 access to recorded sessions, expert videos, and organized learning materials for flexible study.' },
+              { icon: <Target className="w-10 h-10" color="#66ff00" />, title: 'Interview Preparation', desc: 'Mock interviews, resume building, and company-specific question practice to crack cybersecurity jobs.' },
+              { icon: <BookOpen className="w-10 h-10" color="#66ff00" />, title: 'Aptitude & Technical Training', desc: 'Free training in logical thinking, basic maths, and technical concepts to strengthen your foundation.' },
+              { icon: <Bot className="w-10 h-10" color="#66ff00" />, title: 'AI Interview Practice Portal', desc: 'Practice with AI-powered mock interviews for instant feedback and confidence building.' },
+              { icon: <Briefcase className="w-10 h-10" color="#66ff00" />, title: 'Placement Support', desc: 'Dedicated career mentoring, job referrals, and support until you land your dream cybersecurity role.' },
             ].map((feature, i) => (
               <div key={i} className="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-purple-500 transition-all hover:-translate-y-1 group">
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{feature.icon}</div>
@@ -639,40 +668,123 @@ const CyberSecurity = () => {
       <section className="py-20 bg-slate-900 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-             <div className="font-bold text-sm tracking-widest uppercase mb-2" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Alumni Stories</div>
+            <div className="font-bold text-sm tracking-widest uppercase mb-2" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Alumni Stories</div>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Real Results from Bangalore</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">See what our graduates have accomplished after taking our Cyber Security course.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: "Kiran R.", role: "Security Analyst @ TCS", init: "KR", quote: "Transitioned from Helpdesk to Security Analyst. The hands-on labs with Metasploit and Burp Suite were exactly what was asked in my interview.", color: "bg-orange-500" },
-              { name: "Pooja V.", role: "Pen Tester @ Wipro", init: "PV", quote: "The job placement support was incredible. The team helped refine my resume and arranged interviews until I landed a core cybersecurity role.", color: "bg-sky-500" },
-              { name: "Arun K.", role: "SOC Analyst @ Infosys", init: "AK", quote: "The SOC and Incident Response module using Splunk was a game changer for me. Highly recommend the weekend batches for working professionals.", color: "bg-emerald-500" },
+              { name: "Ajith Aswin", time: "a month ago", reviews: "3 reviews", photos: "", init: "AA", quote: "I really liked the structured curriculum and hands-on approach. Working on live projects and running actual ad campaigns gave me confidence. The trainers explain concepts in a simple way, making it perfect for beginners. A great choice for anyone searching for the best Digital Marketing course in Coimbatore.", color: "bg-blue-600" },
+              { name: "Pavi Pavi", time: "a month ago", reviews: "4 reviews", photos: "1 photo", init: "PP", quote: "Hi Am pavithra, A Student at PeopleClick learning Current Batch. I had a great learning experience at this institute. The course was well-structured and easy to understand. Trainers explained concepts clearly with practical examples, which really helped me gain confidence in the subject. The support from the staff was also very good. I would definitely recommend this institute to anyone who wants to build strong knowledge in this course.", color: "bg-pink-600" },
+              { name: "Jothilatha Senthilkumar", time: "3 months ago", reviews: "2 reviews", photos: "", init: "JS", quote: "I successfully completed the Java Full Stack Development course at PeopleClick Learning, and it was a great learning experience. The training covered both frontend and backend technologies in depth, with hands-on projects that helped me gain real-world skills. The trainers were knowledgeable, supportive, and industry-focused. The placement team gave me multiple placement opportunities now i am working as a java full stack developer, I highly recommend PeopleClick Learning to everyone looking to build a strong career in Java Full Stack development course in Coimbatore. Thank you.", color: "bg-emerald-600" },
             ].map((testimonial, i) => (
-              <div key={i} className="bg-slate-950 border border-slate-800 p-8 rounded-2xl relative">
-                <div className="text-yellow-500 text-sm tracking-widest mb-4">★★★★★</div>
-                <blockquote className="text-slate-300 text-sm italic mb-6 leading-relaxed">"{testimonial.quote}"</blockquote>
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className={`w-10 h-10 rounded-full ${testimonial.color} text-white font-bold flex items-center justify-center`}>
+              <div key={i} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-lg relative flex flex-col justify-start">
+
+                {/* Header Profile */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div className={`flex-shrink-0 w-11 h-11 rounded-full ${testimonial.color} text-white font-bold flex items-center justify-center text-lg`}>
                     {testimonial.init}
                   </div>
-                  <div>
-                    <div className="text-white font-bold text-sm">{testimonial.name}</div>
-                    <div className="text-slate-500 text-xs">{testimonial.role}</div>
+                  <div className="flex flex-col justify-center">
+                    <div className="text-white font-bold text-base leading-tight">{testimonial.name}</div>
                   </div>
                 </div>
+
+                {/* Stars and Date */}
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex text-yellow-500 text-base">
+                    {'★★★★★'}
+                  </div>
+                  <span className="text-slate-500 text-xs mt-0.5">{testimonial.time}</span>
+                </div>
+
+                {/* Review Text */}
+                <p className="text-slate-300 text-sm leading-relaxed text-left">
+                  {testimonial.quote}
+                </p>
+
               </div>
             ))}
           </div>
-          
+
           <div className="mt-12 text-center">
-             <p className="text-slate-500 text-sm font-semibold mb-6">OUR ALUMNI WORK AT LEADING TECH COMPANIES</p>
-             <div className="flex flex-wrap justify-center gap-4">
-               {['IBM', 'TCS', 'Microsoft', 'Amazon', 'Dell', 'HP', 'Cisco', 'Accenture', 'Wipro', 'Infosys'].map(company => (
-                 <span key={company} className="px-5 py-2 bg-slate-800 text-slate-300 font-bold rounded-lg border border-slate-700 text-sm hover:bg-slate-700 transition-colors">{company}</span>
-               ))}
-             </div>
+            <p className="text-slate-500 text-sm font-semibold mb-6">OUR ALUMNI WORK AT LEADING TECH COMPANIES</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              {['IBM', 'TCS', 'Microsoft', 'Amazon', 'Dell', 'HP', 'Cisco', 'Accenture', 'Wipro', 'Infosys'].map(company => (
+                <span key={company} className="px-5 py-2 bg-slate-800 text-slate-300 font-bold rounded-lg border border-slate-700 text-sm hover:bg-slate-700 transition-colors">{company}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── YOUTUBE SUCCESS STORIES CAROUSEL ── */}
+      <section className="py-20 bg-slate-950 border-t border-slate-800 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Watch Our Graduates Succeed</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">Hear directly from our alumni who transformed their careers with Peopleclick Learning.</p>
+          </div>
+
+          <style dangerouslySetInnerHTML={{
+            __html: `
+            @keyframes infinite-scroll {
+              from { transform: translateX(0); }
+              to { transform: translateX(-50%); }
+            }
+            .animate-infinite-scroll {
+              animation: infinite-scroll 25s linear infinite;
+            }
+            .animate-infinite-scroll:hover {
+              animation-play-state: paused;
+            }
+          `}} />
+
+          {/* Marquee Wrapper */}
+          <div className="relative w-full overflow-hidden pb-6 pt-4">
+            {/* Fade edges */}
+            <div className="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none hidden md:block"></div>
+            <div className="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none hidden md:block"></div>
+
+            {/* Seamless scrolling track */}
+            <div className="flex w-max animate-infinite-scroll">
+              {[1, 2].map((_, duplicateIndex) => (
+                <div key={duplicateIndex} className="flex gap-6 pr-6">
+                  {videoTestimonials.map((video, index) => (
+                    <div
+                      key={`${duplicateIndex}-${index}`}
+                      className="relative w-[280px] sm:w-[320px] md:w-[380px] h-[220px] sm:h-[240px] rounded-xl overflow-hidden cursor-pointer group flex-shrink-0 border border-slate-800 shadow-xl"
+                      onClick={() => setSelectedVideo(video)}
+                    >
+                      {/* Thumbnail Image */}
+                      <img
+                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                        alt={`${video.name} Testimonial`}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+
+                      {/* Dark Overlay for Text Visibility */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent"></div>
+
+                      {/* YouTube Play Button */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-12 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-600/30 transform transition-transform group-hover:scale-110">
+                          <Play className="w-6 h-6 text-white fill-white" />
+                        </div>
+                      </div>
+
+                      {/* Bottom Info Banner */}
+                      <div className="absolute bottom-0 w-full p-4 text-center border-t border-slate-700/50 bg-slate-900/60 backdrop-blur-md">
+                        <div className="font-black text-white text-lg tracking-wide shadow-black drop-shadow-md" style={{ color: themeColors.primary }}>{video.name}</div>
+                        <div className="text-xs font-bold text-white uppercase tracking-wider mt-1 drop-shadow-md">{video.role}</div>
+                        <div className="text-sm font-black text-yellow-400 mt-1 drop-shadow-md">{video.salary}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -682,53 +794,54 @@ const CyberSecurity = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-pink-900/30 to-indigo-950 -z-10"></div>
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-900/30 to-cyan-900/20 blur-[150px] -z-10"></div>
         <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-r from-emerald-900/20 to-teal-900/15 blur-[120px] -z-10"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
+
             <div>
               <div className="font-bold text-sm tracking-widest uppercase mb-2" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Bangalore Batches</div>
               <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Ready to Secure Your Future?</h2>
               <p className="text-slate-300 text-lg mb-8">Join the elite rank of Cyber Security professionals. Choose a schedule that fits your life.</p>
-              
+
               <div className="space-y-4">
                 <div className="bg-slate-900/80 border border-slate-700 p-5 rounded-xl flex justify-between items-center backdrop-blur">
                   <div>
-                    <h4 className="text-white font-bold mb-1">🗓 Weekend Batch</h4>
+                    <h4 className="text-white font-bold mb-1 flex items-center gap-2"><Calendar className="w-5 h-5" color="#66ff00" /> Weekend Batch</h4>
                     <p className="text-sm text-slate-400">Sat & Sun · 10:00 AM – 1:00 PM</p>
                   </div>
                   <span className="text-xs font-bold bg-green-500/20 text-green-400 px-3 py-1 rounded-full border border-green-500/30">Filling Fast</span>
                 </div>
                 <div className="bg-slate-900/80 border border-slate-700 p-5 rounded-xl flex justify-between items-center backdrop-blur">
                   <div>
-                    <h4 className="text-white font-bold mb-1">📅 Weekday Evening</h4>
+                    <h4 className="text-white font-bold mb-1 flex items-center gap-2"><CalendarDays className="w-5 h-5" color="#66ff00" /> Weekday Evening</h4>
                     <p className="text-sm text-slate-400">Mon – Fri · 7:00 PM – 9:00 PM</p>
                   </div>
                   <span className="text-xs font-bold bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full border border-purple-500/30">Enrolling</span>
                 </div>
               </div>
-              
+
               <div className="mt-10 flex flex-wrap gap-4">
                 <a href="#lead-form" className="bg-white text-purple-900 hover:bg-slate-100 font-bold py-4 px-8 rounded-lg transition-transform hover:scale-105">
                   Book Free Demo Class
                 </a>
                 <a href="tel:+917619343001" className="bg-transparent border border-slate-600 text-white hover:bg-slate-800 font-bold py-4 px-8 rounded-lg transition-colors flex items-center gap-2">
-                  📞 Call +91 7619 343 001
+                  <Phone className="w-5 h-5" color="#66ff00" /> Call +91 7619 343 001
                 </a>
               </div>
             </div>
-            
+
             {/* Value Prop Pricing Card hidden under a "Enquire Now" shield */}
             <div className="bg-slate-900 border-2 border-purple-500/50 p-8 sm:p-10 rounded-3xl relative shadow-[0_0_50px_rgba(168,85,247,0.15)] max-w-md mx-auto w-full">
-              <div className="absolute top-0 right-10 -translate-y-1/2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
+              <div className="absolute top-0 right-10 -translate-y-1/2 text-xs font-bold px-4 py-1.5 rounded-full shadow-lg"
+                style={{ backgroundColor: themeColors.green, color: '#000000' }}>
                 SPECIAL OFFER
               </div>
-              
+
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-white mb-2">Comprehensive Package</h3>
                 <p className="text-slate-400 text-sm">Everything you need to land a job.</p>
               </div>
-              
+
               <ul className="space-y-4 mb-8">
                 {['6-week intensive training (48+ hrs)', 'Hands-on Ethical Hacking Labs', 'CompTIA/CEH aligned curriculum', '100% Guaranteed Interviews', 'Resume & Profile Building', '24/7 Access to Recorded Sessions'].map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-slate-300 text-sm">
@@ -737,13 +850,14 @@ const CyberSecurity = () => {
                   </li>
                 ))}
               </ul>
-              
-              <a href="#lead-form" className="block text-center w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-4 px-6 rounded-xl hover:opacity-90 transition-opacity">
+
+              <a href="#lead-form" className="block text-center w-full font-bold py-4 px-6 rounded-xl hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: themeColors.green, color: '#000000' }}>
                 Enquire for Pricing →
               </a>
-              <p className="text-center text-xs text-slate-500 mt-4">💳 Flexible EMI options available</p>
+              <p className="text-center text-xs text-slate-500 mt-4 flex items-center justify-center gap-1"><CreditCard className="w-3 h-3" /> Flexible EMI options available</p>
             </div>
-            
+
           </div>
         </div>
       </section>
@@ -768,9 +882,9 @@ const CyberSecurity = () => {
             <div>
               <h4 className="text-white font-bold mb-4">Get in Touch</h4>
               <ul className="space-y-3 text-sm text-slate-300">
-                <li className="flex items-start gap-2"><span>📞</span> <a href="tel:+917619343001" className="transition-colors" style={{ color: '#6C63FF' }}>+91 7619 343 001 - Bangalore</a></li>
-                <li className="flex items-start gap-2"><span>📞</span> <a href="tel:+918925449073" className="transition-colors" style={{ color: '#6C63FF' }}>+91 8925 449 073 - Coimbatore</a></li>
-                <li className="flex items-start gap-2"><span>✉</span> <a href="mailto:training@peopleclick.in" className="transition-colors" style={{ color: '#6C63FF' }}>training@peopleclick.in</a></li>
+                <li className="flex items-center gap-2"><span><Phone className="w-4 h-4" /></span> <a href="tel:+917619343001" className="transition-colors" style={{ color: '#66ff00' }}>+91 7619 343 001 - Bangalore</a></li>
+                <li className="flex items-center gap-2"><span><Phone className="w-4 h-4" /></span> <a href="tel:+918925449073" className="transition-colors" style={{ color: '#66ff00' }}>+91 8925 449 073 - Coimbatore</a></li>
+                <li className="flex items-center gap-2"><span><Mail className="w-4 h-4" /></span> <a href="mailto:training@peopleclick.in" className="transition-colors" style={{ color: '#66ff00' }}>training@peopleclick.in</a></li>
               </ul>
             </div>
 
@@ -784,7 +898,8 @@ const CyberSecurity = () => {
             </div> */}
           </div>
 
-          <div className="text-center border-t border-slate-800 pt-8 text-xs text-slate-500">
+          <div className="text-center border-t border-slate-800 pt-8 text-xs"
+            style={{ color: themeColors.green }}>
             © 2026 Peopleclick Learning. All rights reserved.
           </div>
         </div>
@@ -792,27 +907,28 @@ const CyberSecurity = () => {
 
       {/* ── MOBILE FLOAT CTA ── */}
       <div className={`fixed bottom-0 left-0 right-0 p-3 bg-slate-900 border-t border-slate-800 flex gap-3 lg:hidden z-50 transition-transform duration-300 transform ${showFloatCta ? 'translate-y-0' : 'translate-y-full'}`}>
-        <a href="tel:+917619343001" className="flex-1 text-white text-center font-bold text-xs sm:text-sm py-3 rounded-lg border border-slate-700" style={{ backgroundColor: themeColors.surface }}>
-          📞 Call Now
+        <a href="tel:+917619343001" className="flex-1 text-black text-center font-bold text-xs sm:text-sm py-3 rounded-lg border border-slate-700 flex items-center justify-center gap-2" style={{ backgroundColor: themeColors.surface }}>
+          <Phone className="w-4 h-4" /> Call Now
         </a>
-        <a href="#lead-form" className="flex-1 text-white text-center font-bold text-xs sm:text-sm py-3 rounded-lg shadow-lg" style={{ backgroundImage: themeColors.gradientA }}>
+        <a href="#lead-form" className="flex-1 text-center font-bold text-xs sm:text-sm py-3 rounded-lg"
+          style={{ backgroundColor: '#ffffff', backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,1), rgba(245,245,245,0.95))', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', border: '1px solid rgba(255, 255, 255, 0.85)', boxShadow: '0 6px 16px rgba(0, 0, 0, 0.08)', color: '#000000', textShadow: '0 1px 1px rgba(0,0,0,0.08)' }}>
           Get Free Demo
         </a>
       </div>
 
       {/* ── WHATSAPP FLOATING BUTTON ── */}
       <div className="fixed bottom-6 right-6 z-50">
-        <a 
-          href="https://wa.me/917619343001?text=Hi,%20I%20want%20to%20know%20more%20about%20the%20Cybersecurity%20course" 
-          target="_blank" 
+        <a
+          href="https://wa.me/917619343001?text=Hi,%20I%20want%20to%20know%20more%20about%20the%20Cybersecurity%20course"
+          target="_blank"
           rel="noopener noreferrer"
           className="group w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all border-2 border-white"
           style={{ backgroundColor: themeColors.green, boxShadow: '0 10px 20px rgba(34,197,94,0.35)' }}
         >
           <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
           </svg>
-          
+
           {/* Tooltip */}
           <div className="absolute right-20 bottom-2 w-48 bg-white text-slate-900 text-xs font-bold p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none origin-bottom-right scale-95 group-hover:scale-100">
             Chat with us on WhatsApp!
@@ -821,6 +937,29 @@ const CyberSecurity = () => {
         </a>
       </div>
 
+      {/* ── VIDEO MODAL ── */}
+      {selectedVideo && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-sm bg-slate-950/90 animate-fade-in" onClick={() => setSelectedVideo(null)}>
+          <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="absolute -top-12 right-0 w-10 h-10 bg-slate-800/80 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition-colors z-10"
+              onClick={() => setSelectedVideo(null)}
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
