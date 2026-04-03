@@ -1,15 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import {
   GraduationCap, Briefcase, RefreshCw, TrendingUp, Building, DollarSign,
   Search, Swords, Shield, ZoomIn, BarChart, Terminal, Map, Siren,
   Hammer, Brain, Target, BookOpen, Bot, Phone, Rocket, Mail,
-  Lock, Calendar, CalendarDays, CreditCard, Play, X
+  Lock, Calendar, CalendarDays, CreditCard, Play, X, Loader2, AlertCircle
 } from 'lucide-react';
+
+// ─────────────────────────────────────────────
+// 🔑  EmailJS Configuration
+//  1. Go to https://www.emailjs.com/ and create a FREE account
+//  2. Add an Email Service (Gmail, Outlook, etc.) → copy Service ID
+//  3. Create an Email Template with variables:
+//     {{from_name}}, {{from_phone}}, {{from_email}}, {{schedule}}, {{to_email}}
+//  4. Copy your Public Key from Account → API Keys
+//  5. Replace the three placeholders below:
+// ─────────────────────────────────────────────
+const EMAILJS_SERVICE_ID = 'service_ar60q9f';
+const EMAILJS_TEMPLATE_ID = 'template_c302i4n';
+const EMAILJS_PUBLIC_KEY = '2CGO8qiSosH5K1xfS';
+
+// Recipients are set directly inside the EmailJS template's "To Email" field:
+// admin@peopleclick.in, training@peopleclick.in, digitalmarketing@peopleclick.in
 
 const CyberSecurity = () => {
   const [showFloatCta, setShowFloatCta] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({ fullName: '', phone: '', email: '' });
+  const [emailChecking, setEmailChecking] = useState(false);
   const toolsRef = useRef(null);
 
   const themeColors = {
@@ -84,15 +105,133 @@ const CyberSecurity = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubmit = (e) => {
+  // ── Validation helpers ──────────────────────────────────────────
+  const validatePhone = (phone) => {
+    // Indian mobile: 10 digits, starting with 6-9 (optional +91 / 0 prefix)
+    const cleaned = phone.replace(/[\s\-().]/g, '');
+    const indiaRegex = /^(?:\+91|0)?[6-9]\d{9}$/;
+    if (!cleaned) return 'Phone number is required.';
+    if (!indiaRegex.test(cleaned)) return 'Enter a valid 10-digit Indian mobile number.';
+    return '';
+  };
+
+  const validateEmailFormat = (email) => {
+    if (!email) return 'Email address is required.';
+    // RFC-5322 simplified regex
+    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) return 'Enter a valid email address (e.g. you@gmail.com).';
+    return '';
+  };
+
+  const checkEmailDomainExists = async (email) => {
+    // Uses a free public API to verify the domain has valid MX records
+    try {
+      const domain = email.split('@')[1];
+      const response = await fetch(
+        `https://dns.google/resolve?name=${domain}&type=MX`,
+        { signal: AbortSignal.timeout(5000) }
+      );
+      if (!response.ok) return true; // If API fails, allow through
+      const json = await response.json();
+      // Status 0 = NOERROR, and must have Answer records
+      if (json.Status !== 0 || !json.Answer || json.Answer.length === 0) {
+        return false;
+      }
+      return true;
+    } catch {
+      return true; // Network issue → allow through
+    }
+  };
+
+  // ── Field-level blur handlers ───────────────────────────────────
+  const handlePhoneBlur = (e) => {
+    const err = validatePhone(e.target.value);
+    setFieldErrors(prev => ({ ...prev, phone: err }));
+  };
+
+  const handleEmailBlur = async (e) => {
+    const email = e.target.value;
+    const formatErr = validateEmailFormat(email);
+    if (formatErr) {
+      setFieldErrors(prev => ({ ...prev, email: formatErr }));
+      return;
+    }
+    setEmailChecking(true);
+    const domainOk = await checkEmailDomainExists(email);
+    setEmailChecking(false);
+    if (!domainOk) {
+      setFieldErrors(prev => ({
+        ...prev,
+        email: `The domain "${email.split('@')[1]}" does not appear to exist. Please check your email.`,
+      }));
+    } else {
+      setFieldErrors(prev => ({ ...prev, email: '' }));
+    }
+  };
+
+  // ── Submit handler ──────────────────────────────────────────────
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
+    setSubmitError('');
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    // 1) Validate phone
+    const phoneErr = validatePhone(data.phone || '');
+    // 2) Validate email format
+    const emailFormatErr = validateEmailFormat(data.email || '');
+
+    if (phoneErr || emailFormatErr) {
+      setFieldErrors(prev => ({
+        ...prev,
+        phone: phoneErr,
+        email: emailFormatErr,
+      }));
+      return;
+    }
+
+    // 3) Verify email domain has real MX records
+    setIsSubmitting(true);
+    const domainOk = await checkEmailDomainExists(data.email);
+    if (!domainOk) {
+      setFieldErrors(prev => ({
+        ...prev,
+        email: `The domain "${data.email.split('@')[1]}" does not appear to exist. Please use a real email address.`,
+      }));
+      setIsSubmitting(false);
+      return;
+    }
+
+    // 4) Send ONE email via EmailJS — all 3 recipients are set in the template's To field
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: data.fullName,
+          from_phone: data.phone,
+          from_email: data.email,
+          schedule: data.schedule || 'Not specified',
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setFormSubmitted(true);
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      setSubmitError(
+        'Failed to send your details. Please call us directly or try again in a moment.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // SVG Icons
   const CheckIcon = () => (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" style={{ stroke: 'url(#grad)' }} />
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke={themeColors.green}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
     </svg>
   );
 
@@ -187,14 +326,14 @@ const CyberSecurity = () => {
 
               <div className="flex flex-wrap gap-3 mb-10 text-sm font-medium">
                 <span className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full text-slate-300">
-                  <CheckIcon /> Live Instructor-Led
+                  <CheckIcon /> 10+ years of Experinece Industrial experts
                 </span>
                 <span className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full text-slate-300">
                   <CheckIcon /> Hands-on Tools
                 </span>
-                <span className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full text-slate-300">
+                {/* <span className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full text-slate-300">
                   <CheckIcon /> Job Guarantee
-                </span>
+                </span> */}
                 <span className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-full text-slate-300">
                   <CheckIcon /> Certifications
                 </span>
@@ -202,7 +341,7 @@ const CyberSecurity = () => {
 
               <div className="grid grid-cols-3 gap-6 pt-6 border-t border-slate-800 max-w-xl">
                 <div>
-                  <div className="text-3xl font-black text-white mb-1">500+</div>
+                  <div className="text-3xl font-black text-white mb-1">1500+</div>
                   <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Professionals Trained</div>
                 </div>
                 <div>
@@ -224,25 +363,79 @@ const CyberSecurity = () => {
               <div className="relative bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
                 {!formSubmitted ? (
                   <>
-                    <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">Get Free Demo Class <Rocket className="w-6 h-6" color="#66ff00" /></h3>
-                    <p className="text-sm text-slate-400 mb-6">Our counsellor will call you within 2 hours</p>
+                    <h3 className="text-2xl font-bold text-white mb-3 flex items-center gap-2">Get Free Demo Class <Rocket className="w-6 h-6" color="#66ff00" /></h3>
 
-                    <form onSubmit={handleSubmit} className="space-y-4 text-left">
+                    {/* Cute Instructions */}
+                    {/* <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6 relative overflow-hidden group border-l-4 shadow-[0_0_15px_rgba(102,255,0,0.05)] transition-all hover:bg-green-500/15" style={{borderLeftColor: themeColors.green}}>
+                      <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-green-400/20 to-teal-400/20 blur-xl group-hover:scale-150 transition-transform"></div>
+                      <p className="text-sm text-slate-200 font-medium relative z-10 leading-relaxed flex items-start gap-2">
+                        <span className="inline-block animate-bounce text-lg mt-0.5">✨</span> 
+                        <span>Yay! You made it. Just fill out these quick details below and our super friendly counsellor will connect with you to book your completely free demo class!</span>
+                      </p>
+                    </div> */}
+
+                    <form onSubmit={handleSubmit} className="space-y-4 text-left" noValidate>
+
+                      {/* Full Name */}
                       <div>
                         <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Full Name *</label>
-                        <input required type="text" placeholder="Your full name" className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors" style={{ focusBorderColor: '#6C63FF', focusRingColor: '#6C63FF' }} />
+                        <input
+                          required
+                          name="fullName"
+                          type="text"
+                          placeholder="Your full name"
+                          className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors"
+                          onBlur={(e) => setFieldErrors(prev => ({ ...prev, fullName: e.target.value.trim() ? '' : 'Full name is required.' }))}
+                        />
+                        {fieldErrors.fullName && (
+                          <p className="flex items-center gap-1 text-red-400 text-xs mt-1"><AlertCircle className="w-3 h-3" />{fieldErrors.fullName}</p>
+                        )}
                       </div>
+
+                      {/* Phone */}
                       <div>
                         <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Phone Number *</label>
-                        <input required type="tel" placeholder="+91 XXXXX XXXXX" className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors" />
+                        <input
+                          required
+                          name="phone"
+                          type="tel"
+                          placeholder="+91 XXXXX XXXXX"
+                          maxLength={15}
+                          className={`w-full bg-slate-950 border text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors ${fieldErrors.phone ? 'border-red-500' : 'border-slate-800'
+                            }`}
+                          onBlur={handlePhoneBlur}
+                        />
+                        {fieldErrors.phone && (
+                          <p className="flex items-center gap-1 text-red-400 text-xs mt-1"><AlertCircle className="w-3 h-3" />{fieldErrors.phone}</p>
+                        )}
                       </div>
+
+                      {/* Email */}
                       <div>
                         <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Email Address *</label>
-                        <input required type="email" placeholder="you@email.com" className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors" />
+                        <div className="relative">
+                          <input
+                            required
+                            name="email"
+                            type="email"
+                            placeholder="you@email.com"
+                            className={`w-full bg-slate-950 border text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors pr-10 ${fieldErrors.email ? 'border-red-500' : 'border-slate-800'
+                              }`}
+                            onBlur={handleEmailBlur}
+                          />
+                          {emailChecking && (
+                            <Loader2 className="absolute right-3 top-3.5 w-4 h-4 text-slate-400 animate-spin" />
+                          )}
+                        </div>
+                        {fieldErrors.email && (
+                          <p className="flex items-center gap-1 text-red-400 text-xs mt-1"><AlertCircle className="w-3 h-3" />{fieldErrors.email}</p>
+                        )}
                       </div>
+
+                      {/* Schedule */}
                       <div>
                         <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Preferred Schedule</label>
-                        <select className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors appearance-none">
+                        <select name="schedule" className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors appearance-none">
                           <option value="">Select Schedule</option>
                           <option value="weekday">Weekday Batches</option>
                           <option value="weekend">Weekend Batches</option>
@@ -250,9 +443,25 @@ const CyberSecurity = () => {
                         </select>
                       </div>
 
-                      <button type="submit" className="w-full mt-2 font-bold text-base py-3.5 px-6 rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5"
-                        style={{ backgroundColor: themeColors.green, color: '#000000', border: '1px solid rgba(102,255,0,0.5)' }}>
-                        Book My Free Demo →
+                      {/* Submit error banner */}
+                      {submitError && (
+                        <div className="flex items-start gap-2 bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-red-400 text-xs">
+                          <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                          {submitError}
+                        </div>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting || emailChecking}
+                        className="w-full mt-2 font-bold text-base py-3.5 px-6 rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                        style={{ backgroundColor: themeColors.green, color: '#000000', border: '1px solid rgba(102,255,0,0.5)' }}
+                      >
+                        {isSubmitting ? (
+                          <><Loader2 className="w-5 h-5 animate-spin" /> Sending…</>
+                        ) : (
+                          'Book My Free Demo →'
+                        )}
                       </button>
                       <p className="text-center text-xs text-slate-500 mt-4 flex items-center justify-center gap-1"><Lock className="w-3 h-3" /> 100% Free. No spam. Cancel anytime.</p>
                     </form>
@@ -480,7 +689,7 @@ const CyberSecurity = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
             <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700/50 backdrop-blur hover:border-purple-500/50 transition-all hover:scale-105">
-              <div className="text-4xl font-black text-transparent bg-clip-text mb-2" style={{ backgroundImage: themeColors.textGradient }}>500+</div>
+              <div className="text-4xl font-black text-transparent bg-clip-text mb-2" style={{ backgroundImage: themeColors.textGradient }}>1500+</div>
               <div className="text-sm text-slate-300 font-medium">Students Certified</div>
             </div>
             <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700/50 backdrop-blur hover:border-purple-500/50 transition-all hover:scale-105">
@@ -508,7 +717,7 @@ const CyberSecurity = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
             <div className="font-bold text-sm tracking-widest uppercase mb-2" style={{ backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Curriculum</div>
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Advanced Cyber Security Syllabus</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Master Cyber Security Syllabus</h2>
             <p className="text-slate-400 max-w-2xl text-lg">From basic networking to advanced penetration testing, our curriculum is designed to make you industry-ready from day one.</p>
           </div>
 
@@ -675,9 +884,9 @@ const CyberSecurity = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: "Ajith Aswin", time: "a month ago", reviews: "3 reviews", photos: "", init: "AA", quote: "I really liked the structured curriculum and hands-on approach. Working on live projects and running actual ad campaigns gave me confidence. The trainers explain concepts in a simple way, making it perfect for beginners. A great choice for anyone searching for the best Digital Marketing course in Coimbatore.", color: "bg-blue-600" },
+              { name: "Shainisha", time: "2 months ago", reviews: "3 reviews", photos: "", init: "S", quote: "Iam shainisha student in People Click Learning. Batch: Zeta II cybersecurity. This training program was really helpful and practical to me. The technical sessions were clear and easy to understand. The coding part was explained step by step. I learned many new skills from this course. hand on was really helpful to me. Our trainer was very friendly, supportive, and motivating. He always cleared our doubts patiently. The class environment was positive and encouraging. Our placement trainer provided weekly placement classes it was more helpful to us to crack the placements. They also provide good placement support. Thank you so much for the guidance and support.", color: "bg-purple-600" },
               { name: "Pavi Pavi", time: "a month ago", reviews: "4 reviews", photos: "1 photo", init: "PP", quote: "Hi Am pavithra, A Student at PeopleClick learning Current Batch. I had a great learning experience at this institute. The course was well-structured and easy to understand. Trainers explained concepts clearly with practical examples, which really helped me gain confidence in the subject. The support from the staff was also very good. I would definitely recommend this institute to anyone who wants to build strong knowledge in this course.", color: "bg-pink-600" },
-              { name: "Jothilatha Senthilkumar", time: "3 months ago", reviews: "2 reviews", photos: "", init: "JS", quote: "I successfully completed the Java Full Stack Development course at PeopleClick Learning, and it was a great learning experience. The training covered both frontend and backend technologies in depth, with hands-on projects that helped me gain real-world skills. The trainers were knowledgeable, supportive, and industry-focused. The placement team gave me multiple placement opportunities now i am working as a java full stack developer, I highly recommend PeopleClick Learning to everyone looking to build a strong career in Java Full Stack development course in Coimbatore. Thank you.", color: "bg-emerald-600" },
+              { name: "Shashank Patil", time: "2 months ago", reviews: "6 reviews", photos: "", init: "SP", quote: "People Click Company is a highly professional and reliable organization. Their team is knowledgeable, responsive, and truly understands client requirements. The quality of service and attention to detail are excellent. They maintain clear communication and deliver results on time. I would definitely recommend People Click Company to anyone looking for dependable and efficient solutions.", color: "bg-emerald-600" },
             ].map((testimonial, i) => (
               <div key={i} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-lg relative flex flex-col justify-start">
 
@@ -824,8 +1033,8 @@ const CyberSecurity = () => {
                 <a href="#lead-form" className="bg-white text-purple-900 hover:bg-slate-100 font-bold py-4 px-8 rounded-lg transition-transform hover:scale-105">
                   Book Free Demo Class
                 </a>
-                <a href="tel:+917619343001" className="bg-transparent border border-slate-600 text-white hover:bg-slate-800 font-bold py-4 px-8 rounded-lg transition-colors flex items-center gap-2">
-                  <Phone className="w-5 h-5" color="#66ff00" /> Call +91 7619 343 001
+                <a href="tel:+918925449073" className="bg-transparent border border-slate-600 text-white hover:bg-slate-800 font-bold py-4 px-8 rounded-lg transition-colors flex items-center gap-2">
+                  <Phone className="w-5 h-5" color="#66ff00" /> Call +91 8925 449 073
                 </a>
               </div>
             </div>
@@ -907,8 +1116,8 @@ const CyberSecurity = () => {
 
       {/* ── MOBILE FLOAT CTA ── */}
       <div className={`fixed bottom-0 left-0 right-0 p-3 bg-slate-900 border-t border-slate-800 flex gap-3 lg:hidden z-50 transition-transform duration-300 transform ${showFloatCta ? 'translate-y-0' : 'translate-y-full'}`}>
-        <a href="tel:+917619343001" className="flex-1 text-black text-center font-bold text-xs sm:text-sm py-3 rounded-lg border border-slate-700 flex items-center justify-center gap-2" style={{ backgroundColor: themeColors.surface }}>
-          <Phone className="w-4 h-4" /> Call Now
+        <a href="https://wa.me/918925449073?text=Hi,%20I%20would%20like%20to%20know%20more%20about%20the%20Cybersecurity%20course" target="_blank" rel="noopener noreferrer" className="flex-1 text-black text-center font-bold text-xs sm:text-sm py-3 rounded-lg flex items-center justify-center gap-2 transition-transform hover:scale-105" style={{ backgroundColor: themeColors.green }}>
+          <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" /></svg> WhatsApp Us
         </a>
         <a href="#lead-form" className="flex-1 text-center font-bold text-xs sm:text-sm py-3 rounded-lg"
           style={{ backgroundColor: '#ffffff', backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,1), rgba(245,245,245,0.95))', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)', border: '1px solid rgba(255, 255, 255, 0.85)', boxShadow: '0 6px 16px rgba(0, 0, 0, 0.08)', color: '#000000', textShadow: '0 1px 1px rgba(0,0,0,0.08)' }}>
@@ -919,7 +1128,7 @@ const CyberSecurity = () => {
       {/* ── WHATSAPP FLOATING BUTTON ── */}
       <div className="fixed bottom-6 right-6 z-50">
         <a
-          href="https://wa.me/917619343001?text=Hi,%20I%20want%20to%20know%20more%20about%20the%20Cybersecurity%20course"
+          href="https://wa.me/918925449073?text=Hi,%20I%20want%20to%20know%20more%20about%20the%20Cybersecurity%20course"
           target="_blank"
           rel="noopener noreferrer"
           className="group w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all border-2 border-white"
