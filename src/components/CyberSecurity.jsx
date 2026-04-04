@@ -56,10 +56,10 @@ const CyberSecurity = () => {
   };
 
   const videoTestimonials = [
-    { id: 'dQw4w9WgXcQ', name: 'AJITH', role: 'DIGITAL MARKETING', salary: '5 LPA' },
-    { id: 'jNQXAC9IVRw', name: 'KRITHIKA', role: 'FULL STACK DEVELOPER', salary: '7 LPA' },
-    { id: 'V-_O7nl0Ii0', name: 'BHUVANESHWARAN', role: 'DATA ARCHITECT', salary: '4.5 LPA' },
-    { id: 'tPEE9ZwTmy0', name: 'DIVYA', role: 'CYBER SECURITY ANALYST', salary: '6.5 LPA' },
+    { id: 'fCjrbK3KFg4', name: 'PEOPLECLICK ALUMNI', role: 'DATA ANALYTICS', salary: '4 LPA', isShort: true, thumbnail: '/thumbnails/thumb1.png' },
+    { id: 'PPvIpS4UAEI', name: 'PEOPLECLICK ALUMNI', role: 'DATA ANALYTICS', salary: '4 LPA', isShort: true, thumbnail: '/thumbnails/thumb2.png' },
+    { id: 'bZ4I48o02b4', name: 'PEOPLECLICK ALUMNI', role: 'FULL STACK', salary: '5 LPA', isShort: true, thumbnail: '/thumbnails/thumb3.png' },
+    { id: '0XpBOS5jWW4', name: 'PEOPLECLICK ALUMNI', role: 'DIGITAL MARKETING', salary: '6 LPA', isShort: true, thumbnail: '/thumbnails/thumb4.png' },
   ];
 
   useEffect(() => {
@@ -312,7 +312,7 @@ const CyberSecurity = () => {
             {/* Left: Copy */}
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider mb-6" style={{ backgroundColor: 'rgba(108, 99, 255, 0.1)', borderColor: 'rgba(255, 101, 132, 0.3)', backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#6C63FF' }}></span>
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'white' }}></span>
                 Now Immediately Enrolling
               </div>
 
@@ -358,7 +358,7 @@ const CyberSecurity = () => {
             {/* Right: Modern Lead Form */}
             <div className="lg:col-span-5 relative" id="lead-form">
               {/* Form Glow */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-100 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-green-600 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-100 animate-pulse"></div>
 
               <div className="relative bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
                 {!formSubmitted ? (
@@ -438,7 +438,6 @@ const CyberSecurity = () => {
                         <select name="schedule" className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-lg px-4 py-3 focus:outline-none transition-colors appearance-none">
                           <option value="">Select Schedule</option>
                           <option value="weekday">Weekday Batches</option>
-                          <option value="weekend">Weekend Batches</option>
                           <option value="online">Online Training</option>
                         </select>
                       </div>
@@ -964,13 +963,21 @@ const CyberSecurity = () => {
                     <div
                       key={`${duplicateIndex}-${index}`}
                       className="relative w-[280px] sm:w-[320px] md:w-[380px] h-[220px] sm:h-[240px] rounded-xl overflow-hidden cursor-pointer group flex-shrink-0 border border-slate-800 shadow-xl"
-                      onClick={() => setSelectedVideo(video)}
+                      onClick={() => window.open(video.isShort ? `https://www.youtube.com/shorts/${video.id}` : `https://www.youtube.com/watch?v=${video.id}`, '_blank', 'noopener,noreferrer')}
                     >
+                      {/* Blurred Background for Shorts to fill the landscape space */}
+                      {video.isShort && video.thumbnail && (
+                        <div
+                          className="absolute inset-0 w-full h-full bg-cover bg-center blur-md opacity-40 scale-110 transition-transform duration-500 group-hover:scale-125"
+                          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}${video.thumbnail})` }}
+                        />
+                      )}
+
                       {/* Thumbnail Image */}
                       <img
-                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                        src={video.thumbnail ? `${process.env.PUBLIC_URL}${video.thumbnail}` : `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                         alt={`${video.name} Testimonial`}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className={`absolute inset-0 w-full h-full transition-transform duration-500 group-hover:scale-105 ${video.isShort ? 'object-contain' : 'object-cover'}`}
                       />
 
                       {/* Dark Overlay for Text Visibility */}
@@ -1013,20 +1020,33 @@ const CyberSecurity = () => {
               <p className="text-slate-300 text-lg mb-8">Join the elite rank of Cyber Security professionals. Choose a schedule that fits your life.</p>
 
               <div className="space-y-4">
+                {/* Batch 1: Digital Marketing – Delta-9 
                 <div className="bg-slate-900/80 border border-slate-700 p-5 rounded-xl flex justify-between items-center backdrop-blur">
                   <div>
-                    <h4 className="text-white font-bold mb-1 flex items-center gap-2"><Calendar className="w-5 h-5" color="#66ff00" /> Weekend Batch</h4>
-                    <p className="text-sm text-slate-400">Sat & Sun · 10:00 AM – 1:00 PM</p>
+                    <h4 className="text-white font-bold mb-1 flex items-center gap-2"><Calendar className="w-5 h-5" color="#66ff00" /> Digital Marketing · Delta - 9</h4>
+                    <p className="text-sm text-slate-400">Mon – Fri · 9:00 AM – 11:00 AM</p>
                   </div>
-                  <span className="text-xs font-bold bg-green-500/20 text-green-400 px-3 py-1 rounded-full border border-green-500/30">Filling Fast</span>
+                  <span className="text-xs font-bold bg-green-500/20 text-green-400 px-3 py-1 rounded-full border border-green-500/30 whitespace-nowrap">Filling Fast</span>
+                </div> */}
+
+                {/* Batch 2: Cyber Security – Zeta-4 */}
+                <div className="bg-slate-900/80 border border-green-500/40 p-5 rounded-xl flex justify-between items-center backdrop-blur">
+                  <div>
+                    <h4 className="text-white font-bold mb-1 flex items-center gap-2"><CalendarDays className="w-5 h-5" color="#66ff00" /> Cyber Security ·</h4>
+                    <p className="text-sm text-slate-400">Mon – Fri · 9:30 AM – 11:00 AM</p>
+                  </div>
+                  <span className="text-xs font-bold bg-green-500/20 text-green-400 px-3 py-1 rounded-full border border-green-500/30 whitespace-nowrap">Filling Fast</span>
+                  {/* <span className="text-xs font-bold bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full border border-purple-500/30 whitespace-nowrap">Enrolling</span> */}
                 </div>
+
+                {/* Batch 3: UI/UX – SIGMA 4 
                 <div className="bg-slate-900/80 border border-slate-700 p-5 rounded-xl flex justify-between items-center backdrop-blur">
                   <div>
-                    <h4 className="text-white font-bold mb-1 flex items-center gap-2"><CalendarDays className="w-5 h-5" color="#66ff00" /> Weekday Evening</h4>
-                    <p className="text-sm text-slate-400">Mon – Fri · 7:00 PM – 9:00 PM</p>
+                    <h4 className="text-white font-bold mb-1 flex items-center gap-2"><CalendarDays className="w-5 h-5" color="#66ff00" /> UI/UX Design · SIGMA 4</h4>
+                    <p className="text-sm text-slate-400">Mon – Fri · 11:00 AM – 1:00 PM</p>
                   </div>
-                  <span className="text-xs font-bold bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full border border-purple-500/30">Enrolling</span>
-                </div>
+                  <span className="text-xs font-bold bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full border border-purple-500/30 whitespace-nowrap">Enrolling</span>
+                </div> */}
               </div>
 
               <div className="mt-10 flex flex-wrap gap-4">
@@ -1040,7 +1060,7 @@ const CyberSecurity = () => {
             </div>
 
             {/* Value Prop Pricing Card hidden under a "Enquire Now" shield */}
-            <div className="bg-slate-900 border-2 border-purple-500/50 p-8 sm:p-10 rounded-3xl relative shadow-[0_0_50px_rgba(168,85,247,0.15)] max-w-md mx-auto w-full">
+            <div className="bg-slate-900 border-2 p-8 sm:p-10 rounded-3xl relative max-w-md mx-auto w-full" style={{ borderColor: '#bffa97ff', boxShadow: '0 0 20px rgba(213, 249, 189, 0.2)' }}>
               <div className="absolute top-0 right-10 -translate-y-1/2 text-xs font-bold px-4 py-1.5 rounded-full shadow-lg"
                 style={{ backgroundColor: themeColors.green, color: '#000000' }}>
                 SPECIAL OFFER
