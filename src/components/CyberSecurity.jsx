@@ -4,7 +4,7 @@ import {
   GraduationCap, Briefcase, RefreshCw, TrendingUp, Building, DollarSign,
   Search, Swords, Shield, ZoomIn, BarChart, Terminal, Map, Siren,
   Hammer, Brain, Target, BookOpen, Bot, Phone, Rocket, Mail,
-  Lock, Calendar, CalendarDays, CreditCard, Play, X, Loader2, AlertCircle
+  Lock, CalendarDays, CreditCard, Play, X, Loader2, AlertCircle
 } from 'lucide-react';
 
 // ─────────────────────────────────────────────
@@ -118,7 +118,7 @@ const CyberSecurity = () => {
   const validateEmailFormat = (email) => {
     if (!email) return 'Email address is required.';
     // RFC-5322 simplified regex
-    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) return 'Enter a valid email address (e.g. you@gmail.com).';
     return '';
   };
@@ -267,13 +267,13 @@ const CyberSecurity = () => {
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center justify-center md:justify-end gap-2 w-full sm:w-auto">
-            <a href="tel:+918925449073" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-black font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5 shadow-lg shadow-purple-500/30 border border-indigo-500/40 min-w-0"
+            <a href="tel:+918925449073" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-black font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5  border border-indigo-500/40 min-w-0"
               style={{ backgroundImage: themeColors.gradientA }}>
               <span className="text-[8px] md:text-xs uppercase tracking-wide">Coimbatore</span>
               <span className="text-[10px] md:text-sm whitespace-nowrap flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> +91 8925 449 073</span>
             </a>
 
-            <a href="tel:+917619343001" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-black font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/30 border border-indigo-500/40 min-w-0"
+            <a href="tel:+917619343001" className="w-full sm:w-48 md:w-auto flex items-center justify-center md:justify-start gap-2 text-black font-semibold text-[10px] md:text-sm py-2 px-3 md:px-4 rounded-full transition-transform transform hover:-translate-y-0.5  border border-indigo-500/40 min-w-0"
               style={{ backgroundImage: themeColors.gradientB }}>
               <span className="text-[8px] md:text-xs uppercase tracking-wide">Bangalore</span>
               <span className="text-[10px] md:text-sm whitespace-nowrap flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> +91 7619 343 001</span>
@@ -312,7 +312,7 @@ const CyberSecurity = () => {
             {/* Left: Copy */}
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider mb-6" style={{ backgroundColor: 'rgba(108, 99, 255, 0.1)', borderColor: 'rgba(255, 101, 132, 0.3)', backgroundImage: themeColors.textGradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'white' }}></span>
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'rgba(254, 6, 6, 0.99)' }}></span>
                 Now Immediately Enrolling
               </div>
 
@@ -1072,7 +1072,7 @@ const CyberSecurity = () => {
               </div>
 
               <ul className="space-y-4 mb-8">
-                {['6-week intensive training (48+ hrs)', 'Hands-on Ethical Hacking Labs', 'CompTIA/CEH aligned curriculum', '100% Guaranteed Interviews', 'Resume & Profile Building', '24/7 Access to Recorded Sessions'].map((item, i) => (
+                {['6-week intensive training (48+ hrs)', 'Hands-on Ethical Hacking Labs', 'CompTIA/CEH aligned curriculum', '100% Placement Assistance', 'Resume & Profile Building', '24/7 Access to Recorded Sessions'].map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-slate-300 text-sm">
                     <span className="mt-0.5"><CheckIcon /></span>
                     {item}
