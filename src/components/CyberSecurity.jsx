@@ -1229,7 +1229,7 @@ const CyberSecurity = () => {
       </div>
 
       {/* ── WHATSAPP FLOATING BUTTON ── */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-20 right-4 z-50 lg:bottom-6 lg:right-6">
         <a
           href="https://wa.me/918925449073?text=Hi,%20I%20want%20to%20know%20more%20about%20the%20Cybersecurity%20course"
           target="_blank"
