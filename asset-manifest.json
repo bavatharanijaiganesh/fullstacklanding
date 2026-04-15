@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/fullstack/static/css/main.2bad1519.css",
-    "main.js": "/fullstack/static/js/main.1cc752f9.js",
-    "static/js/453.0a0b2dba.chunk.js": "/fullstack/static/js/453.0a0b2dba.chunk.js",
-    "index.html": "/fullstack/index.html",
-    "main.2bad1519.css.map": "/fullstack/static/css/main.2bad1519.css.map",
-    "main.1cc752f9.js.map": "/fullstack/static/js/main.1cc752f9.js.map",
-    "453.0a0b2dba.chunk.js.map": "/fullstack/static/js/453.0a0b2dba.chunk.js.map"
+    "main.css": "/fullstacklanding/static/css/main.2bad1519.css",
+    "main.js": "/fullstacklanding/static/js/main.65f793b9.js",
+    "static/js/453.0a0b2dba.chunk.js": "/fullstacklanding/static/js/453.0a0b2dba.chunk.js",
+    "index.html": "/fullstacklanding/index.html",
+    "main.2bad1519.css.map": "/fullstacklanding/static/css/main.2bad1519.css.map",
+    "main.65f793b9.js.map": "/fullstacklanding/static/js/main.65f793b9.js.map",
+    "453.0a0b2dba.chunk.js.map": "/fullstacklanding/static/js/453.0a0b2dba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2bad1519.css",
-    "static/js/main.1cc752f9.js"
+    "static/js/main.65f793b9.js"
   ]
 }
