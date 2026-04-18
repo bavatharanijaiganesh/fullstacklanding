@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/fullstacklanding/static/css/main.2bad1519.css",
-    "main.js": "/fullstacklanding/static/js/main.65f793b9.js",
-    "static/js/453.0a0b2dba.chunk.js": "/fullstacklanding/static/js/453.0a0b2dba.chunk.js",
-    "index.html": "/fullstacklanding/index.html",
-    "main.2bad1519.css.map": "/fullstacklanding/static/css/main.2bad1519.css.map",
-    "main.65f793b9.js.map": "/fullstacklanding/static/js/main.65f793b9.js.map",
-    "453.0a0b2dba.chunk.js.map": "/fullstacklanding/static/js/453.0a0b2dba.chunk.js.map"
+    "main.css": "/javafullstack/static/css/main.03a804c0.css",
+    "main.js": "/javafullstack/static/js/main.948931cf.js",
+    "static/js/453.0a0b2dba.chunk.js": "/javafullstack/static/js/453.0a0b2dba.chunk.js",
+    "index.html": "/javafullstack/index.html",
+    "main.03a804c0.css.map": "/javafullstack/static/css/main.03a804c0.css.map",
+    "main.948931cf.js.map": "/javafullstack/static/js/main.948931cf.js.map",
+    "453.0a0b2dba.chunk.js.map": "/javafullstack/static/js/453.0a0b2dba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2bad1519.css",
-    "static/js/main.65f793b9.js"
+    "static/css/main.03a804c0.css",
+    "static/js/main.948931cf.js"
   ]
 }
