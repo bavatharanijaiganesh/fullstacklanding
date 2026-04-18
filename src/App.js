@@ -8,10 +8,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/javafullstack" element={<JavaFullStack />} />
-        <Route path="/pythonfullstack" element={<PythonFullStack />} />
-        <Route path="/mernstack" element={<MernStack />} />
-        <Route path="*" element={<Navigate to="/javafullstack" />} />
+        <Route path="/java-fullstack-course-in-coimbatore" element={<JavaFullStack />} />
+        <Route path="/python-fullstack-course-in-coimbatore" element={<PythonFullStack />} />
+        <Route path="/mern-stack-course-in-coimbatore" element={<MernStack />} />
+        <Route path="*" element={<Navigate to="/java-fullstack-course-in-coimbatore" />} />
       </Routes>
     </Router>
   );

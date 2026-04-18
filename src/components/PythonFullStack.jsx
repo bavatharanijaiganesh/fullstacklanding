@@ -394,18 +394,22 @@ const Fullstack = () => {
                 ))}
               </div>
 
-              <div className="grid grid-cols-3 gap-6 pt-6 border-t max-w-xl" style={{ borderColor: themeColors.border }}>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 pt-6 border-t max-w-3xl" style={{ borderColor: themeColors.border }}>
                 <div>
-                  <div className="text-3xl font-black mb-1 gradient-text">1500+</div>
-                  <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: themeColors.textMuted }}>Professionals Trained</div>
+                  <div className="text-2xl md:text-3xl font-black mb-1 gradient-text">1500+</div>
+                  <div className="text-[10px] md:text-xs uppercase tracking-wider font-semibold leading-tight" style={{ color: themeColors.textMuted }}>Professionals Trained</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-black mb-1 gradient-text">100%</div>
-                  <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: themeColors.textMuted }}>Placement Support</div>
+                  <div className="text-2xl md:text-3xl font-black mb-1 gradient-text">100%</div>
+                  <div className="text-[10px] md:text-xs uppercase tracking-wider font-semibold leading-tight" style={{ color: themeColors.textMuted }}>Placement Support</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-black mb-1 gradient-text">₹3-8LPA</div>
-                  <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: themeColors.textMuted }}>Avg. Salary Post-Course</div>
+                  <div className="text-2xl md:text-3xl font-black mb-1 gradient-text">₹3-8LPA</div>
+                  <div className="text-[10px] md:text-xs uppercase tracking-wider font-semibold leading-tight" style={{ color: themeColors.textMuted }}>Avg. Salary Post-Course</div>
+                </div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-black mb-1 gradient-text">100%</div>
+                  <div className="text-[10px] md:text-xs uppercase tracking-wider font-semibold leading-tight" style={{ color: themeColors.textMuted }}>IT Company Internship for all high-caliber students.</div>
                 </div>
               </div>
             </div>
@@ -550,7 +554,8 @@ const Fullstack = () => {
               { icon: <Terminal className="w-8 h-8" color={themeColors.red} />, title: 'Hands-on Coding Practice', desc: 'Gain practical experience by building and deploying at least 5 industry-level web applications.' },
               { icon: <Award className="w-8 h-8" color={themeColors.red} />, title: 'Industry Certification', desc: 'Earn recognized training certificates that significantly validate your skills to top global employers.' },
               { icon: <Briefcase className="w-8 h-8" color={themeColors.red} />, title: '100% Placement Assistance', desc: 'Get dedicated support for resume building, mock interviews, and guaranteed job interviews.' },
-              { icon: <GraduationCap className="w-8 h-8" color={themeColors.red} />, title: 'Expert Trainers', desc: '10+ years experienced industrial Full Stack trainers will guide you through every concept.' }
+              { icon: <GraduationCap className="w-8 h-8" color={themeColors.red} />, title: 'Expert Trainers', desc: '10+ years experienced industrial Full Stack trainers will guide you through every concept.' },
+              { icon: <Building className="w-8 h-8" color={themeColors.red} />, title: 'Corporate IT Internship', desc: 'Top-performing students get exclusive internship opportunities in a real corporate IT office environment.' }
             ].map((highlight, idx) => (
               <div key={idx} className="bg-white border p-8 rounded-2xl transition-all duration-300 red-card group relative overflow-hidden"
                 style={{ borderColor: themeColors.border, boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
@@ -756,6 +761,10 @@ const Fullstack = () => {
                 <p className="font-bold mb-2" style={{ color: themeColors.text }}>Will I receive a formal certificate after completion?</p>
                 <p className="text-sm">Yes, you will receive an industry-recognized Course Completion Certificate from PeopleClick Learning upon finishing the course and assignments.</p>
               </div>
+              <div>
+                <p className="font-bold mb-2" style={{ color: themeColors.text }}>Do you provide internship opportunities?</p>
+                <p className="text-sm">Yes, we provide exclusive internship opportunities in a real corporate IT office environment for top-performing students to gain industry experience.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -764,20 +773,27 @@ const Fullstack = () => {
       {/* ── OUTCOMES STRIP ── */}
       <div className="border-y py-12 relative overflow-hidden" style={{ backgroundColor: themeColors.offWhite, borderColor: themeColors.border }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
-            {[
-              { val: '1500+', label: 'Students Certified' },
-              { val: '100%', label: 'Placement Assistance' },
-              { val: '10+', label: 'Live Projects' },
-              { val: '15+', label: 'Technologies Mastered' },
-              { val: '24/7', label: 'Lab & LMS Access' },
-            ].map((stat, i) => (
-              <div key={i} className={`p-6 rounded-2xl bg-white border transition-all hover:scale-105 ${i === 4 ? 'hidden lg:block' : ''}`}
-                style={{ borderColor: themeColors.border, boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
-                <div className="text-4xl font-black mb-2 gradient-text">{stat.val}</div>
-                <div className="text-sm font-medium" style={{ color: themeColors.textMuted }}>{stat.label}</div>
-              </div>
-            ))}
+          <div className="relative w-full overflow-hidden pb-4">
+            <div className="flex w-max animate-infinite-scroll">
+              {[1, 2].map((_, duplicateIndex) => (
+                <div key={duplicateIndex} className="flex gap-6 pr-6">
+                  {[
+                    { val: '1500+', label: 'Students Certified' },
+                    { val: '100%', label: 'Placement Assistance' },
+                    { val: '10+', label: 'Live Projects' },
+                    { val: '100%', label: 'IT Company Internship for all high-caliber students' },
+                    { val: '15+', label: 'Technologies Mastered' },
+                    { val: '24/7', label: 'Lab & LMS Access' },
+                  ].map((stat, i) => (
+                    <div key={`${duplicateIndex}-${i}`} className="p-6 rounded-2xl bg-white border transition-all hover:scale-105 min-w-[200px] md:min-w-[260px] flex-shrink-0 text-center"
+                      style={{ borderColor: themeColors.border, boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+                      <div className="text-3xl md:text-4xl font-black mb-2 gradient-text">{stat.val}</div>
+                      <div className="text-sm font-medium leading-tight whitespace-normal max-w-[220px] mx-auto" style={{ color: themeColors.textMuted }}>{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
