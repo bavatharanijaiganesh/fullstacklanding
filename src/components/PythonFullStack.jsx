@@ -3,8 +3,9 @@ import emailjs from '@emailjs/browser';
 import {
   GraduationCap, Briefcase, RefreshCw, TrendingUp, Building, DollarSign,
   Terminal, Hammer, Brain, Target, BookOpen, Bot, Phone, Rocket, Mail,
-  Lock, CalendarDays, CreditCard, Play, X, Loader2, AlertCircle, Code, Award, Globe, Database, Layers, Cpu
+  Lock, CalendarDays, CreditCard, Play, X, Loader2, AlertCircle, Code, Award, Globe, Database, Layers, Cpu, MapPin
 } from 'lucide-react';
+import { districts } from '../data/districts';
 
 const EMAILJS_SERVICE_ID = 'service_ar60q9f';
 const EMAILJS_TEMPLATE_ID = 'template_c302i4n';
@@ -19,7 +20,11 @@ const Fullstack = () => {
   const [fieldErrors, setFieldErrors] = useState({ fullName: '', phone: '', email: '' });
   const [emailChecking, setEmailChecking] = useState(false);
   const [highlightForm, setHighlightForm] = useState(false);
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [locationQuery, setLocationQuery] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
   const toolsRef = useRef(null);
+  const locationRef = useRef(null);
 
   const handleScrollToForm = () => {
     setHighlightForm(true);
@@ -59,7 +64,15 @@ const Fullstack = () => {
     const handleScroll = () => {
       setShowFloatCta(window.scrollY > 400);
     };
+
+    const handleClickOutside = (event) => {
+      if (locationRef.current && !locationRef.current.contains(event.target)) {
+        setShowLocationDropdown(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
 
     // SEO meta info
     document.title = 'Python Full Stack Developer Course in Coimbatore | Placement Training | PeopleClick';
@@ -143,6 +156,7 @@ const Fullstack = () => {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
       document.head.removeChild(scriptFaq);
       document.head.removeChild(scriptCourse);
     };
@@ -235,6 +249,7 @@ const Fullstack = () => {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
+    data.location = selectedLocation;
 
     const phoneErr = validatePhone(data.phone || '');
     const emailFormatErr = validateEmailFormat(data.email || '');
@@ -267,6 +282,7 @@ const Fullstack = () => {
           from_name: data.fullName,
           from_phone: data.phone,
           from_email: data.email,
+          location: data.location || 'Not specified',
           schedule: data.schedule || 'Not specified',
         },
         EMAILJS_PUBLIC_KEY
@@ -486,6 +502,54 @@ const Fullstack = () => {
                           <p className="flex items-center gap-1 text-red-500 text-xs mt-1"><AlertCircle className="w-3 h-3" />{fieldErrors.email}</p>
                         )}
                       </div>
+
+                        {/* Location Dropdown */}
+                        <div className="relative" ref={locationRef}>
+                          <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ color: themeColors.text }}>Location (District, State) *</label>
+                          <div className="relative">
+                            <input
+                              required
+                              type="text"
+                              value={locationQuery}
+                              onChange={(e) => {
+                                setLocationQuery(e.target.value);
+                                setShowLocationDropdown(true);
+                                if (!e.target.value) setSelectedLocation('');
+                              }}
+                              onFocus={() => setShowLocationDropdown(true)}
+                              placeholder="Type your district (e.g. Madurai)"
+                              className="w-full border text-sm rounded-lg px-4 py-3 focus:outline-none transition-all pr-10"
+                              style={{ borderColor: themeColors.border, color: themeColors.text, backgroundColor: themeColors.offWhite }}
+                            />
+                            <MapPin className="absolute right-3 top-3.5 w-4 h-4" style={{ color: themeColors.textLight }} />
+                          </div>
+
+                          {showLocationDropdown && (
+                            <div className="absolute z-[60] left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-xl custom-scrollbar">
+                              {districts
+                                .filter(d => d.toLowerCase().includes(locationQuery.toLowerCase()))
+                                .slice(0, 50) // Performance: only show top 50 matches
+                                .map((district, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer transition-colors flex items-center gap-2 border-b last:border-b-0"
+                                    style={{ borderBottomColor: themeColors.offWhite }}
+                                    onClick={() => {
+                                      setSelectedLocation(district);
+                                      setLocationQuery(district);
+                                      setShowLocationDropdown(false);
+                                    }}
+                                  >
+                                    <MapPin className="w-3.5 h-3.5 opacity-50" />
+                                    <span>{district}</span>
+                                  </div>
+                                ))}
+                              {districts.filter(d => d.toLowerCase().includes(locationQuery.toLowerCase())).length === 0 && (
+                                <div className="px-4 py-3 text-sm text-gray-500 italic">No matches found.</div>
+                              )}
+                            </div>
+                          )}
+                        </div>
 
                       {/* Schedule */}
                       <div>
