@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/fullstack/static/css/main.7de42742.css",
-    "main.js": "/fullstack/static/js/main.a9f0a979.js",
-    "static/js/453.0a0b2dba.chunk.js": "/fullstack/static/js/453.0a0b2dba.chunk.js",
-    "index.html": "/fullstack/index.html",
-    "main.7de42742.css.map": "/fullstack/static/css/main.7de42742.css.map",
-    "main.a9f0a979.js.map": "/fullstack/static/js/main.a9f0a979.js.map",
-    "453.0a0b2dba.chunk.js.map": "/fullstack/static/js/453.0a0b2dba.chunk.js.map"
+    "main.css": "/digitalmarketing-course-in-coimbatore/static/css/main.a5598849.css",
+    "main.js": "/digitalmarketing-course-in-coimbatore/static/js/main.c8b6468d.js",
+    "static/js/453.0a0b2dba.chunk.js": "/digitalmarketing-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js",
+    "index.html": "/digitalmarketing-course-in-coimbatore/index.html",
+    "main.a5598849.css.map": "/digitalmarketing-course-in-coimbatore/static/css/main.a5598849.css.map",
+    "main.c8b6468d.js.map": "/digitalmarketing-course-in-coimbatore/static/js/main.c8b6468d.js.map",
+    "453.0a0b2dba.chunk.js.map": "/digitalmarketing-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7de42742.css",
-    "static/js/main.a9f0a979.js"
+    "static/css/main.a5598849.css",
+    "static/js/main.c8b6468d.js"
   ]
 }
