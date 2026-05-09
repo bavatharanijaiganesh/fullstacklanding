@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/digitalmarketing-course-in-coimbatore/static/css/main.a5598849.css",
-    "main.js": "/digitalmarketing-course-in-coimbatore/static/js/main.b7d9d9e7.js",
-    "static/js/453.0a0b2dba.chunk.js": "/digitalmarketing-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js",
-    "index.html": "/digitalmarketing-course-in-coimbatore/index.html",
-    "main.a5598849.css.map": "/digitalmarketing-course-in-coimbatore/static/css/main.a5598849.css.map",
-    "main.b7d9d9e7.js.map": "/digitalmarketing-course-in-coimbatore/static/js/main.b7d9d9e7.js.map",
-    "453.0a0b2dba.chunk.js.map": "/digitalmarketing-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js.map"
+    "main.css": "/uiux-design-course-in-coimbatore/static/css/main.4fa33a01.css",
+    "main.js": "/uiux-design-course-in-coimbatore/static/js/main.174593d3.js",
+    "static/js/453.0a0b2dba.chunk.js": "/uiux-design-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js",
+    "index.html": "/uiux-design-course-in-coimbatore/index.html",
+    "main.4fa33a01.css.map": "/uiux-design-course-in-coimbatore/static/css/main.4fa33a01.css.map",
+    "main.174593d3.js.map": "/uiux-design-course-in-coimbatore/static/js/main.174593d3.js.map",
+    "453.0a0b2dba.chunk.js.map": "/uiux-design-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a5598849.css",
-    "static/js/main.b7d9d9e7.js"
+    "static/css/main.4fa33a01.css",
+    "static/js/main.174593d3.js"
   ]
 }
