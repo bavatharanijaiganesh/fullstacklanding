@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/uiux-design-course-in-coimbatore/static/css/main.4fa33a01.css",
-    "main.js": "/uiux-design-course-in-coimbatore/static/js/main.174593d3.js",
+    "main.js": "/uiux-design-course-in-coimbatore/static/js/main.de583157.js",
     "static/js/453.0a0b2dba.chunk.js": "/uiux-design-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js",
     "index.html": "/uiux-design-course-in-coimbatore/index.html",
     "main.4fa33a01.css.map": "/uiux-design-course-in-coimbatore/static/css/main.4fa33a01.css.map",
-    "main.174593d3.js.map": "/uiux-design-course-in-coimbatore/static/js/main.174593d3.js.map",
+    "main.de583157.js.map": "/uiux-design-course-in-coimbatore/static/js/main.de583157.js.map",
     "453.0a0b2dba.chunk.js.map": "/uiux-design-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4fa33a01.css",
-    "static/js/main.174593d3.js"
+    "static/js/main.de583157.js"
   ]
 }
