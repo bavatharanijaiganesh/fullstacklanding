@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/uiux-design-course-in-coimbatore/static/css/main.4fa33a01.css",
-    "main.js": "/uiux-design-course-in-coimbatore/static/js/main.de583157.js",
-    "static/js/453.0a0b2dba.chunk.js": "/uiux-design-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js",
-    "index.html": "/uiux-design-course-in-coimbatore/index.html",
-    "main.4fa33a01.css.map": "/uiux-design-course-in-coimbatore/static/css/main.4fa33a01.css.map",
-    "main.de583157.js.map": "/uiux-design-course-in-coimbatore/static/js/main.de583157.js.map",
-    "453.0a0b2dba.chunk.js.map": "/uiux-design-course-in-coimbatore/static/js/453.0a0b2dba.chunk.js.map"
+    "main.css": "/fullstack/static/css/main.a52ba25b.css",
+    "main.js": "/fullstack/static/js/main.bd1bbe97.js",
+    "static/js/453.0a0b2dba.chunk.js": "/fullstack/static/js/453.0a0b2dba.chunk.js",
+    "index.html": "/fullstack/index.html",
+    "main.a52ba25b.css.map": "/fullstack/static/css/main.a52ba25b.css.map",
+    "main.bd1bbe97.js.map": "/fullstack/static/js/main.bd1bbe97.js.map",
+    "453.0a0b2dba.chunk.js.map": "/fullstack/static/js/453.0a0b2dba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4fa33a01.css",
-    "static/js/main.de583157.js"
+    "static/css/main.a52ba25b.css",
+    "static/js/main.bd1bbe97.js"
   ]
 }
