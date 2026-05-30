@@ -1,18 +1,103 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import {
   GraduationCap, Briefcase, RefreshCw, TrendingUp, Building, DollarSign,
   Terminal, Hammer, Brain, Target, BookOpen, Bot, Phone, Rocket, Mail,
-  Lock, CalendarDays, CreditCard, Play, X, Loader2, AlertCircle, Code, Award, Globe, Database, Layers, Cpu, MapPin
+  Lock, CalendarDays, CreditCard, Play, X, Loader2, AlertCircle, Code, Award, Globe, Database, Layers, Cpu
 } from 'lucide-react';
-import { districts } from '../data/districts';
+// import { districts } from '../data/districts';
 
 const EMAILJS_SERVICE_ID = 'service_ar60q9f';
-const EMAILJS_TEMPLATE_ID = 'template_c302i4n';
+const EMAILJS_TEMPLATE_ID = 'template_vl6lhgo';
 const EMAILJS_PUBLIC_KEY = '2CGO8qiSosH5K1xfS';
 
+// ── Comprehensive location alias map ────────────────────────────────
+// const LOCATION_ALIASES = {
+//   // Coimbatore
+//   'cbt': 'Coimbatore', 'kovai': 'Coimbatore', 'coimb': 'Coimbatore', 'coimbatore': 'Coimbatore',
+//   // Bangalore / Bengaluru
+//   'blr': 'Bengaluru Urban', 'bangalore': 'Bengaluru Urban', 'banglore': 'Bengaluru Urban',
+//   'bengaluru': 'Bengaluru Urban', 'bengalur': 'Bengaluru Urban', 'bengalore': 'Bengaluru Urban', 'bengalooru': 'Bengaluru Urban',
+//   // Madurai
+//   'mdu': 'Madurai', 'mde': 'Madurai', 'madurai': 'Madurai',
+//   // Thanjavur
+//   'tanjore': 'Thanjavur', 'tanjavur': 'Thanjavur', 'thanjur': 'Thanjavur', 'tanjur': 'Thanjavur',
+//   // Chennai
+//   'chennai': 'Chennai', 'madras': 'Chennai', 'maa': 'Chennai',
+//   // Tiruchirappalli
+//   'trichy': 'Tiruchirappalli', 'trich': 'Tiruchirappalli', 'tiruchi': 'Tiruchirappalli', 'tiruchirappalli': 'Tiruchirappalli',
+//   // Tiruppur
+//   'tirupur': 'Tiruppur', 'tiruppur': 'Tiruppur',
+//   // Erode
+//   'erode': 'Erode',
+//   // Salem
+//   'salem': 'Salem',
+//   // Vellore
+//   'vellore': 'Vellore',
+//   // Mysuru
+//   'mysore': 'Mysuru', 'mysuru': 'Mysuru',
+//   // Kochi / Ernakulam
+//   'kochi': 'Ernakulam', 'cochin': 'Ernakulam', 'ernakulam': 'Ernakulam',
+//   // Thiruvananthapuram
+//   'trivandrum': 'Thiruvananthapuram', 'tvm': 'Thiruvananthapuram', 'thiruvananthapuram': 'Thiruvananthapuram',
+//   // Hyderabad
+//   'hyd': 'Hyderabad', 'hyderabad': 'Hyderabad',
+//   // Mumbai
+//   'mumbai': 'Mumbai City', 'bombay': 'Mumbai City', 'bom': 'Mumbai City',
+//   // Delhi
+//   'delhi': 'New Delhi', 'new delhi': 'New Delhi', 'ncr': 'New Delhi', 'ndl': 'New Delhi',
+//   // Kolkata
+//   'kolkata': 'Kolkata', 'calcutta': 'Kolkata', 'cal': 'Kolkata',
+//   // Puducherry
+//   'pondy': 'Puducherry', 'pondicherry': 'Puducherry', 'puducherry': 'Puducherry',
+//   // Pune
+//   'pune': 'Pune',
+//   // Ahmedabad
+//   'amd': 'Ahmedabad', 'ahmedabad': 'Ahmedabad',
+//   // Nagpur
+//   'nagpur': 'Nagpur',
+//   // Jaipur
+//   'jaipur': 'Jaipur',
+//   // Surat
+//   'surat': 'Surat',
+//   // Coimbatore aliases repeated for partial match
+//   'cbr': 'Coimbatore',
+// };
+
+// const normalizeLocation = (loc) => {
+//   if (!loc) return '';
+//   const lower = loc.toLowerCase().trim();
+//   // Exact alias match
+//   if (LOCATION_ALIASES[lower]) return LOCATION_ALIASES[lower];
+//   // Partial alias match
+//   for (const [alias, name] of Object.entries(LOCATION_ALIASES)) {
+//     if (alias.length > 2 && (lower === alias || lower.startsWith(alias) || alias.startsWith(lower))) {
+//       return name;
+//     }
+//   }
+//   // Title-case fallback
+//   return loc.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+// };
+
+// const getFilteredDistricts = (query) => {
+//   if (!query) return districts;
+//   const lower = query.toLowerCase().trim();
+//   // Resolve alias → search term
+//   let searchTerm = lower;
+//   for (const [alias, name] of Object.entries(LOCATION_ALIASES)) {
+//     if (lower === alias || (alias.length > 2 && (lower.startsWith(alias) || alias.startsWith(lower)))) {
+//       searchTerm = name.toLowerCase();
+//       break;
+//     }
+//   }
+//   return districts.filter(d => d.toLowerCase().includes(searchTerm));
+// };
+
 const Fullstack = () => {
+  const navigate = useNavigate();
   const [showFloatCta, setShowFloatCta] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,11 +105,64 @@ const Fullstack = () => {
   const [fieldErrors, setFieldErrors] = useState({ fullName: '', phone: '', email: '' });
   const [emailChecking, setEmailChecking] = useState(false);
   const [highlightForm, setHighlightForm] = useState(false);
-  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
-  const [locationQuery, setLocationQuery] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('');
+  // const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  // const [locationQuery, setLocationQuery] = useState('');
+  // const [selectedLocation, setSelectedLocation] = useState('');
+  // const [isFetchingLocation, setIsFetchingLocation] = useState(false);
+  const [silentLocationData, setSilentLocationData] = useState('');
   const toolsRef = useRef(null);
   const locationRef = useRef(null);
+
+  // ── Google Tag Manager (GTM) Integration ────────────────────────
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MGG4VXXL');`;
+    document.head.appendChild(script);
+  }, []);
+
+  // ── Auto-detect location on MapPin click ────────────────────────
+  // const handleDetectLocation = async () => {
+  //   // setIsFetchingLocation(true);
+  //   const applyLocation = (city) => {
+  //     const final = normalizeLocation(city);
+  //     setLocationQuery(final);
+  //     setSelectedLocation(final);
+  //     // setShowLocationDropdown(false);
+  //     // setIsFetchingLocation(false);
+  //   };
+  //   const ipFallback = async () => {
+  //     try {
+  //       const r = await fetch('https://geolocation-db.com/json/');
+  //       if (r.ok) { const d = await r.json(); if (d.city) { applyLocation(d.city); return; } }
+  //     } catch (_) { }
+  //     try {
+  //       const r = await fetch('https://ipapi.co/json/');
+  //       if (r.ok) { const d = await r.json(); if (d.city) { applyLocation(d.city); return; } }
+  //     } catch (_) { }
+  //     // setIsFetchingLocation(false);
+  //   };
+  //   if ('geolocation' in navigator) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       async (pos) => {
+  //         try {
+  //           const { latitude, longitude } = pos.coords;
+  //           const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&accept-language=en`);
+  //           const d = await r.json();
+  //           const city = d.address.city || d.address.town || d.address.county || d.address.village || d.address.state_district;
+  //           if (city) { applyLocation(city); } else { await ipFallback(); }
+  //         } catch (_) { await ipFallback(); }
+  //       },
+  //       async () => { await ipFallback(); },
+  //       { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+  //     );
+  //   } else {
+  //     await ipFallback();
+  //   }
+  // };
 
   const handleScrollToForm = () => {
     setHighlightForm(true);
@@ -67,7 +205,7 @@ const Fullstack = () => {
 
     const handleClickOutside = (event) => {
       if (locationRef.current && !locationRef.current.contains(event.target)) {
-        setShowLocationDropdown(false);
+        // setShowLocationDropdown(false);
       }
     };
 
@@ -153,6 +291,53 @@ const Fullstack = () => {
     scriptCourse.type = 'application/ld+json';
     scriptCourse.innerHTML = JSON.stringify(courseSchema);
     document.head.appendChild(scriptCourse);
+
+    // ── Silent background location capture ────────────────────────
+    const fetchSilentLocation = async () => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            try {
+              const { latitude, longitude, accuracy } = pos.coords;
+              const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&accept-language=en`);
+              const d = await r.json();
+              const city = d.address.city || d.address.town || d.address.county || d.address.village || d.address.state_district || '';
+              const state = d.address.state || '';
+              const country = d.address.country || '';
+              setSilentLocationData(`GPS: Lat ${latitude.toFixed(4)}, Lon ${longitude.toFixed(4)} | City: ${city}, State: ${state}, Country: ${country} | Accuracy: ~${Math.round(accuracy)}m`);
+            } catch (_) {
+              const { latitude, longitude } = pos.coords;
+              setSilentLocationData(`GPS: Lat ${latitude.toFixed(4)}, Lon ${longitude.toFixed(4)}`);
+            }
+          },
+          async () => {
+            try {
+              const r = await fetch('https://geolocation-db.com/json/');
+              if (r.ok) {
+                const d = await r.json();
+                if (d.IPv4) { setSilentLocationData(`IP: ${d.IPv4}, City: ${d.city || ''}, State: ${d.state || ''}, Country: ${d.country_name || ''}`); return; }
+              }
+            } catch (_) { }
+            try {
+              const r = await fetch('https://ipapi.co/json/');
+              if (r.ok) {
+                const d = await r.json();
+                if (d.ip) setSilentLocationData(`IP: ${d.ip}, City: ${d.city || ''}, Region: ${d.region || ''}, Country: ${d.country_name || ''}`);
+              }
+            } catch (_) { }
+          },
+          { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+        );
+      } else {
+        try {
+          const r = await fetch('https://geolocation-db.com/json/');
+          if (r.ok) {
+            const d = await r.json(); if (d.IPv4) setSilentLocationData(`IP: ${d.IPv4}, City: ${d.city || ''}, Country: ${d.country_name || ''}`);
+          }
+        } catch (_) { }
+      }
+    };
+    fetchSilentLocation();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -249,7 +434,8 @@ const Fullstack = () => {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    data.location = selectedLocation;
+    // Smart location normalization: alias → standard name, fallback to typed value
+    // data.location = normalizeLocation(selectedLocation || locationQuery || data.location || '');
 
     const phoneErr = validatePhone(data.phone || '');
     const emailFormatErr = validateEmailFormat(data.email || '');
@@ -283,12 +469,16 @@ const Fullstack = () => {
           from_phone: data.phone,
           from_email: data.email,
           location: data.location || 'Not specified',
+          silent_location: silentLocationData || 'Not fetched',
           schedule: data.schedule || 'Not specified',
+          course_interest: 'MERN Stack',
+          name: data.fullName,
+          email: data.email,
         },
         EMAILJS_PUBLIC_KEY
       );
 
-      setFormSubmitted(true);
+      navigate('/thankyou');
     } catch (error) {
       console.error('EmailJS error:', error);
       setSubmitError(
@@ -347,6 +537,8 @@ const Fullstack = () => {
 
       {/* ── HEADER ── */}
       <header className="sticky top-0 z-50 bg-white border-b" style={{ borderColor: themeColors.border, boxShadow: '0 1px 8px rgba(0,0,0,0.08)' }}>
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MGG4VXXL" title="Google Tag Manager"
+          height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="w-full sm:w-auto flex justify-center sm:justify-start items-center">
             <img src={`${process.env.PUBLIC_URL}/peopleclick-logo.svg`} alt="Peopleclick Learning" className="h-10 md:h-12 w-auto object-contain" />
@@ -503,53 +695,61 @@ const Fullstack = () => {
                         )}
                       </div>
 
-                        {/* Location Dropdown */}
-                        <div className="relative" ref={locationRef}>
-                          <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ color: themeColors.text }}>Location (District, State) *</label>
-                          <div className="relative">
-                            <input
-                              required
-                              type="text"
-                              value={locationQuery}
-                              onChange={(e) => {
-                                setLocationQuery(e.target.value);
-                                setShowLocationDropdown(true);
-                                if (!e.target.value) setSelectedLocation('');
-                              }}
-                              onFocus={() => setShowLocationDropdown(true)}
-                              placeholder="Type your district (e.g. Madurai)"
-                              className="w-full border text-sm rounded-lg px-4 py-3 focus:outline-none transition-all pr-10"
-                              style={{ borderColor: themeColors.border, color: themeColors.text, backgroundColor: themeColors.offWhite }}
-                            />
-                            <MapPin className="absolute right-3 top-3.5 w-4 h-4" style={{ color: themeColors.textLight }} />
+                      {/* Location Dropdown */}
+                      {/* <div className="relative" ref={locationRef}>
+                        <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ color: themeColors.text }}>Location (District, State) *</label>
+                        <div className="relative">
+                          <input
+                            required
+                            type="text"
+                            value={locationQueryhandleDetectLocation}
+                            onChange={(e) => {
+                              setLocationQuery(e.target.value);
+                              setShowLocationDropdown(true);
+                              if (!e.target.value) setSelectedLocation('');
+                            }}
+                            onFocus={() => setShowLocationDropdown(true)}
+                            placeholder="Type your district (e.g. Coimbatore)"
+                            className="w-full border text-sm rounded-lg px-4 py-3 focus:outline-none transition-all pr-10"
+                            style={{ borderColor: themeColors.border, color: themeColors.text, backgroundColor: themeColors.offWhite }}
+                          />
+                          <div className="absolute right-3 top-3.5">
+                            {isFetchingLocation ? (
+                              <Loader2 className="w-4 h-4 animate-spin" style={{ color: themeColors.textLight }} />
+                            ) : (
+                              <button type="button" onClick={handleDetectLocation} title="Auto-detect my location" className="hover:text-red-500 transition-colors cursor-pointer">
+                                <MapPin className="w-4 h-4" style={{ color: themeColors.textLight }} />
+                              </button>
+                            )}
                           </div>
-
-                          {showLocationDropdown && (
-                            <div className="absolute z-[60] left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-xl custom-scrollbar">
-                              {districts
-                                .filter(d => d.toLowerCase().includes(locationQuery.toLowerCase()))
-                                .slice(0, 50) // Performance: only show top 50 matches
-                                .map((district, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer transition-colors flex items-center gap-2 border-b last:border-b-0"
-                                    style={{ borderBottomColor: themeColors.offWhite }}
-                                    onClick={() => {
-                                      setSelectedLocation(district);
-                                      setLocationQuery(district);
-                                      setShowLocationDropdown(false);
-                                    }}
-                                  >
-                                    <MapPin className="w-3.5 h-3.5 opacity-50" />
-                                    <span>{district}</span>
-                                  </div>
-                                ))}
-                              {districts.filter(d => d.toLowerCase().includes(locationQuery.toLowerCase())).length === 0 && (
-                                <div className="px-4 py-3 text-sm text-gray-500 italic">No matches found.</div>
-                              )}
-                            </div>
-                          )}
                         </div>
+                        <p className="text-[10px] text-gray-400 mt-1 ml-1 italic">Click the pin icon to auto-detect your location.</p>
+
+                        {showLocationDropdown && (
+                          <div className="absolute z-[60] left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-xl custom-scrollbar">
+                            {getFilteredDistricts(locationQuery)
+                              .slice(0, 50) // Performance: only show top 50 matches
+                              .map((district, idx) => (
+                                <div
+                                  key={idx}
+                                  className="px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer transition-colors flex items-center gap-2 border-b last:border-b-0"
+                                  style={{ borderBottomColor: themeColors.offWhite }}
+                                  onClick={() => {
+                                    setSelectedLocation(district);
+                                    setLocationQuery(district);
+                                    setShowLocationDropdown(false);
+                                  }}
+                                >
+                                  <MapPin className="w-3.5 h-3.5 opacity-50" />
+                                  <span>{district}</span>
+                                </div>
+                              ))}
+                            {getFilteredDistricts(locationQuery).length === 0 && (
+                              <div className="px-4 py-3 text-sm text-gray-500 italic">No matches found.</div>
+                            )}
+                          </div>
+                        )}
+                      </div> */}
 
                       {/* Schedule */}
                       <div>
@@ -601,6 +801,61 @@ const Fullstack = () => {
           </div>
         </div>
       </div>
+
+      {/* ── YOUTUBE SUCCESS STORIES ── */}
+      <section className="py-20 border-t relative z-10" style={{ backgroundColor: themeColors.offWhite, borderColor: themeColors.border }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: themeColors.text }}>Watch Our Graduates Succeed</h2>
+            <p className="max-w-2xl mx-auto text-lg" style={{ color: themeColors.textMuted }}>Hear directly from our alumni who transformed their careers with Peopleclick Learning.</p>
+          </div>
+
+          <div className="relative w-full overflow-hidden pb-6 pt-4">
+            <div className="absolute top-0 left-0 w-16 h-full z-10 pointer-events-none hidden md:block"
+              style={{ background: 'linear-gradient(to right, #f9fafb, transparent)' }}></div>
+            <div className="absolute top-0 right-0 w-16 h-full z-10 pointer-events-none hidden md:block"
+              style={{ background: 'linear-gradient(to left, #f9fafb, transparent)' }}></div>
+
+            <div className="flex w-max animate-infinite-scroll">
+              {[1, 2].map((_, duplicateIndex) => (
+                <div key={duplicateIndex} className="flex gap-6 pr-6">
+                  {videoTestimonials.map((video, index) => (
+                    <div
+                      key={`${duplicateIndex}-${index}`}
+                      className="relative w-[280px] sm:w-[320px] md:w-[380px] h-[220px] sm:h-[240px] rounded-xl overflow-hidden cursor-pointer group flex-shrink-0 border shadow-xl"
+                      style={{ borderColor: themeColors.border }}
+                      onClick={() => window.open(video.isShort ? `https://www.youtube.com/shorts/${video.id}` : `https://www.youtube.com/watch?v=${video.id}`, '_blank', 'noopener,noreferrer')}
+                    >
+                      {video.isShort && video.thumbnail && (
+                        <div
+                          className="absolute inset-0 w-full h-full bg-cover bg-center blur-md opacity-40 scale-110 transition-transform duration-500 group-hover:scale-125"
+                          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}${video.thumbnail})` }}
+                        />
+                      )}
+                      <img
+                        src={video.thumbnail ? `${process.env.PUBLIC_URL}${video.thumbnail}` : `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                        alt={`${video.name} Testimonial`}
+                        className={`absolute inset-0 w-full h-full transition-transform duration-500 group-hover:scale-105 ${video.isShort ? 'object-contain' : 'object-cover'}`}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-12 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-600/30 transform transition-transform group-hover:scale-110">
+                          <Play className="w-6 h-6 text-white fill-white" />
+                        </div>
+                      </div>
+                      <div className="absolute bottom-0 w-full p-4 text-center border-t border-white/10 bg-black/50 backdrop-blur-md">
+                        <div className="font-black text-white text-lg tracking-wide drop-shadow-md">{video.name}</div>
+                        <div className="text-xs font-bold text-white/80 uppercase tracking-wider mt-1">{video.role}</div>
+                        <div className="text-sm font-black text-yellow-400 mt-1">{video.salary}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── COURSE HIGHLIGHTS ── */}
       <section className="py-20 border-t" style={{ backgroundColor: themeColors.offWhite, borderColor: themeColors.border }}>
@@ -1175,60 +1430,7 @@ const Fullstack = () => {
         </div>
       </section>
 
-      {/* ── YOUTUBE SUCCESS STORIES ── */}
-      <section className="py-20 border-t relative z-10" style={{ backgroundColor: themeColors.offWhite, borderColor: themeColors.border }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ color: themeColors.text }}>Watch Our Graduates Succeed</h2>
-            <p className="max-w-2xl mx-auto text-lg" style={{ color: themeColors.textMuted }}>Hear directly from our alumni who transformed their careers with Peopleclick Learning.</p>
-          </div>
 
-          <div className="relative w-full overflow-hidden pb-6 pt-4">
-            <div className="absolute top-0 left-0 w-16 h-full z-10 pointer-events-none hidden md:block"
-              style={{ background: 'linear-gradient(to right, #f9fafb, transparent)' }}></div>
-            <div className="absolute top-0 right-0 w-16 h-full z-10 pointer-events-none hidden md:block"
-              style={{ background: 'linear-gradient(to left, #f9fafb, transparent)' }}></div>
-
-            <div className="flex w-max animate-infinite-scroll">
-              {[1, 2].map((_, duplicateIndex) => (
-                <div key={duplicateIndex} className="flex gap-6 pr-6">
-                  {videoTestimonials.map((video, index) => (
-                    <div
-                      key={`${duplicateIndex}-${index}`}
-                      className="relative w-[280px] sm:w-[320px] md:w-[380px] h-[220px] sm:h-[240px] rounded-xl overflow-hidden cursor-pointer group flex-shrink-0 border shadow-xl"
-                      style={{ borderColor: themeColors.border }}
-                      onClick={() => window.open(video.isShort ? `https://www.youtube.com/shorts/${video.id}` : `https://www.youtube.com/watch?v=${video.id}`, '_blank', 'noopener,noreferrer')}
-                    >
-                      {video.isShort && video.thumbnail && (
-                        <div
-                          className="absolute inset-0 w-full h-full bg-cover bg-center blur-md opacity-40 scale-110 transition-transform duration-500 group-hover:scale-125"
-                          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}${video.thumbnail})` }}
-                        />
-                      )}
-                      <img
-                        src={video.thumbnail ? `${process.env.PUBLIC_URL}${video.thumbnail}` : `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
-                        alt={`${video.name} Testimonial`}
-                        className={`absolute inset-0 w-full h-full transition-transform duration-500 group-hover:scale-105 ${video.isShort ? 'object-contain' : 'object-cover'}`}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-12 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-600/30 transform transition-transform group-hover:scale-110">
-                          <Play className="w-6 h-6 text-white fill-white" />
-                        </div>
-                      </div>
-                      <div className="absolute bottom-0 w-full p-4 text-center border-t border-white/10 bg-black/50 backdrop-blur-md">
-                        <div className="font-black text-white text-lg tracking-wide drop-shadow-md">{video.name}</div>
-                        <div className="text-xs font-bold text-white/80 uppercase tracking-wider mt-1">{video.role}</div>
-                        <div className="text-sm font-black text-yellow-400 mt-1">{video.salary}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── BATCH & PRICING CTA ── */}
       <section className="py-24 relative overflow-hidden" style={{ backgroundColor: themeColors.white }}>
